@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { Analytics } from "@vercel/analytics/next";
 import { fontDisplay, fontMono } from "./fonts";
 import { site } from "@/data/site";
 import { CursorCrosshair } from "@/components/CursorCrosshair";
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <body>
         <CursorCrosshair />
         {children}
+        <Analytics />
       </body>
     </html>
   );
