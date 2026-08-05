@@ -1,0 +1,71 @@
+/*
+  Single source of truth for design tokens.
+  No component may hardcode a color, spacing, radius, or shadow value —
+  everything reads from these custom properties.
+*/
+
+:root {
+  /* Color */
+  --color-bg: #f5f4f0;
+  --color-ink: #141414;
+  --color-fg-muted: #6b6b66;
+  --color-border: #dad8d0;
+  --color-surface: #eae8e1;
+  --color-accent: #ff4b1e;
+
+  /* Spacing (8px base unit) */
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 24px;
+  --space-6: 32px;
+  --space-7: 48px;
+  --space-8: 64px;
+  --space-9: 96px;
+  --space-10: 128px;
+  --space-11: 192px;
+
+  /* Section vertical rhythm */
+  --section-padding-y: var(--space-11);
+  --section-padding-y-mobile: var(--space-9);
+
+  /* Radius — deliberately near-zero, borders over shadows */
+  --radius-sm: 2px;
+  --radius-none: 0px;
+
+  /* Borders */
+  --border-hairline: 1px solid var(--color-border);
+
+  /* Typography scale */
+  --text-hero: clamp(3rem, 9vw, 8.5rem);
+  --text-section-heading: clamp(2rem, 5vw, 3.5rem);
+  --text-case-title: clamp(1.5rem, 3vw, 2rem);
+  --text-stat: clamp(2.5rem, 6vw, 5.5rem);
+  --text-body-lg: 1.125rem;
+  --text-body: 1rem;
+  --text-meta: 0.875rem;
+  --text-meta-sm: 0.8125rem;
+  --text-label: 0.75rem;
+
+  --leading-tight: 0.95;
+  --leading-heading: 1.1;
+  --leading-body: 1.6;
+
+  --tracking-label: 0.08em;
+  --tracking-tight: -0.02em;
+
+  /* Layout */
+  --content-max-width: 1200px;
+  --content-padding-x: var(--space-6);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-standard: 240ms;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --content-padding-x: var(--space-4);
+  }
+}

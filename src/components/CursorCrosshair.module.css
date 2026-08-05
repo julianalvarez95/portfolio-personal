@@ -1,0 +1,58 @@
+.overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.2s var(--ease-standard);
+}
+
+.overlay.active {
+  opacity: 1;
+}
+
+.hLine,
+.vLine {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: var(--color-border);
+  will-change: transform;
+}
+
+.hLine {
+  width: 100%;
+  height: 1px;
+}
+
+.vLine {
+  width: 1px;
+  height: 100%;
+}
+
+.coords {
+  position: fixed;
+  top: 0;
+  left: 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  letter-spacing: var(--tracking-label);
+  color: var(--color-accent);
+  background: var(--color-bg);
+  border: var(--border-hairline);
+  padding: 2px 8px;
+  white-space: nowrap;
+  will-change: transform;
+}
+
+@media (pointer: coarse) {
+  .overlay {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .overlay {
+    display: none;
+  }
+}

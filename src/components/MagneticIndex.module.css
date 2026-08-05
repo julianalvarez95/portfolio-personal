@@ -1,0 +1,5 @@
+.magnetic {
+  display: inline-block;
+  transition: transform 0.12s var(--ease-standard), color 0.12s var(--ease-standard);
+  will-change: transform;
+}

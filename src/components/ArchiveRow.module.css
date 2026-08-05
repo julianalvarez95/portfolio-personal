@@ -1,0 +1,118 @@
+.row {
+  border-top: var(--border-hairline);
+  transition: border-color 0.15s var(--ease-standard);
+}
+
+.row:last-child {
+  border-bottom: var(--border-hairline);
+}
+
+.row.lit {
+  border-top-color: var(--color-accent);
+}
+
+.trigger {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2ch 1.4fr 1.6fr 1fr auto;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: var(--font-mono);
+  color: var(--color-ink);
+  transition: background var(--duration-standard) var(--ease-standard);
+}
+
+.trigger:hover {
+  background: var(--color-surface);
+}
+
+.index {
+  font-size: var(--text-meta-sm);
+  color: var(--color-fg-muted);
+}
+
+.company {
+  font-size: var(--text-meta);
+  font-weight: 600;
+  color: var(--color-ink);
+}
+
+.role {
+  font-size: var(--text-meta-sm);
+  color: var(--color-fg-muted);
+}
+
+.dates {
+  font-size: var(--text-meta-sm);
+  color: var(--color-fg-muted);
+  white-space: nowrap;
+}
+
+.toggle {
+  font-size: var(--text-meta-sm);
+  color: var(--color-accent);
+  justify-self: end;
+}
+
+.panel {
+  overflow: hidden;
+  transition: grid-template-rows var(--duration-standard) var(--ease-standard);
+  display: grid;
+  grid-template-rows: 0fr;
+}
+
+.panelOpen {
+  grid-template-rows: 1fr;
+}
+
+.panelInner {
+  overflow: hidden;
+}
+
+.oneLiner,
+.detail {
+  padding: 0 0 var(--space-5) calc(2ch + var(--space-4));
+  font-family: var(--font-display);
+  font-size: var(--text-meta);
+  color: var(--color-fg-muted);
+  line-height: var(--leading-body);
+  max-width: 70ch;
+}
+
+.detail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+@media (max-width: 720px) {
+  .trigger {
+    grid-template-columns: 2ch 1fr auto;
+    grid-template-areas:
+      "index company toggle"
+      ". role role"
+      ". dates dates";
+    row-gap: var(--space-1);
+  }
+
+  .index {
+    grid-area: index;
+  }
+  .company {
+    grid-area: company;
+  }
+  .role {
+    grid-area: role;
+  }
+  .dates {
+    grid-area: dates;
+  }
+  .toggle {
+    grid-area: toggle;
+  }
+}

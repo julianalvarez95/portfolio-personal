@@ -1,0 +1,21 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+.bio {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-body-lg);
+  line-height: var(--leading-body);
+  color: var(--color-ink);
+  max-width: 68ch;
+}
+
+@media (min-width: 900px) {
+  .layout {
+    grid-template-columns: 1.4fr 1fr;
+    align-items: start;
+  }
+}
