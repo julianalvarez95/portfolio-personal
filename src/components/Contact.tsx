@@ -1,6 +1,7 @@
 import { site } from "@/data/site";
 import { SectionHeading } from "./SectionHeading";
 import { LiveClock } from "./LiveClock";
+import { BrandIcon } from "./icons/BrandIcon";
 import styles from "./Contact.module.css";
 
 export function Contact() {
@@ -15,13 +16,16 @@ export function Contact() {
         <div className={styles.layout}>
           <div className={styles.primary}>
             <a className={styles.email} href={`mailto:${site.email}`}>
+              <BrandIcon icon="gmail" className={styles.emailIcon} />
               {site.email}
             </a>
             <nav className={styles.links} aria-label="Contact links">
               <a href={site.linkedin} target="_blank" rel="noreferrer">
+                <BrandIcon icon="linkedin" className={styles.linkIcon} />
                 LinkedIn
               </a>
               <a href={site.github} target="_blank" rel="noreferrer">
+                <BrandIcon icon="github" className={styles.linkIcon} />
                 GitHub
               </a>
               <a href={site.cvFile} target="_blank" rel="noreferrer">
