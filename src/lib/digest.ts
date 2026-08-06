@@ -14,11 +14,13 @@ export type DigestSlide = DigestItem & {
   generatedAt: string;
 };
 
+const DIGEST_AGENT_URL = "https://digest-agent.vercel.app/digests";
+
 /**
- * Newest first, capped at 3 — mirrors the retention window `digest-agent`
- * (the Eve agent receiving homelab-gitops' morning-digest output) keeps.
- * Swap this for a fetch against digest-agent's persisted output once it's
- * deployed; the shape below is the agreed contract.
+ * Fallback content, shown until `digest-agent` has accumulated real digests
+ * from homelab-gitops' morning-digest CronJob (that patch is separate from
+ * this repo). Newest first, capped at 3 — mirrors digest-agent's retention
+ * window. Once real digests exist, `getDigests` prefers them automatically.
  */
 const MOCK_DIGESTS: Digest[] = [
   {
@@ -95,6 +97,23 @@ const MOCK_DIGESTS: Digest[] = [
 ];
 
 export async function getDigests(): Promise<Digest[]> {
+  const secret = process.env.DIGEST_READ_SECRET;
+  if (secret) {
+    try {
+      const res = await fetch(DIGEST_AGENT_URL, {
+        headers: { "X-Digest-Secret": secret },
+        next: { revalidate: 3600 },
+      });
+      if (res.ok) {
+        const data = (await res.json()) as { digests?: Digest[] };
+        if (data.digests && data.digests.length > 0) {
+          return data.digests;
+        }
+      }
+    } catch {
+      // digest-agent unreachable — fall through to the mock below.
+    }
+  }
   return MOCK_DIGESTS;
 }
 
