@@ -1,10 +1,14 @@
 import { lab } from "@/data/lab";
+import { getDigests, flattenDigests } from "@/lib/digest";
 import { SectionHeading } from "./SectionHeading";
 import { StatBlock } from "./StatBlock";
 import { LabDiagram } from "./LabDiagram";
+import { MorningDigestCarousel } from "./MorningDigestCarousel";
 import styles from "./Lab.module.css";
 
-export function Lab() {
+export async function Lab() {
+  const digestSlides = flattenDigests(await getDigests());
+
   return (
     <section id="lab" className="section">
       <div className="container">
@@ -24,6 +28,15 @@ export function Lab() {
         </div>
 
         <LabDiagram />
+
+        <div className={styles.digestHeader}>
+          <span className={styles.project}>Morning digest — live feed</span>
+          <span className={styles.tagline}>
+            Actual daily output from the morning-digest CronJob above, pulled
+            in via a Vercel Eve agent.
+          </span>
+        </div>
+        <MorningDigestCarousel slides={digestSlides} />
 
         <div className={styles.footer}>
           <ul className={styles.stack}>

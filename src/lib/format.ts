@@ -6,3 +6,12 @@ export function formatLocalTime(timeZone: string, date: Date): string {
     hour12: false,
   }).format(date);
 }
+
+export function formatDigestDate(iso: string): string {
+  return new Intl.DateTimeFormat("en-US", {
+    month: "short",
+    day: "2-digit",
+  })
+    .format(new Date(iso))
+    .toUpperCase();
+}
