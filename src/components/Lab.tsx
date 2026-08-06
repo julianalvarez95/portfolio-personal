@@ -4,6 +4,7 @@ import { SectionHeading } from "./SectionHeading";
 import { StatBlock } from "./StatBlock";
 import { LabDiagram } from "./LabDiagram";
 import { MorningDigestCarousel } from "./MorningDigestCarousel";
+import { BrandIcon } from "./icons/BrandIcon";
 import styles from "./Lab.module.css";
 
 export async function Lab() {
@@ -48,7 +49,12 @@ export async function Lab() {
         <div className={styles.footer}>
           <ul className={styles.stack}>
             {lab.stack.map((item) => (
-              <li key={item}>{item}</li>
+              <li key={item.label}>
+                {item.icon && (
+                  <BrandIcon icon={item.icon} className={styles.stackIcon} />
+                )}
+                <span>{item.label}</span>
+              </li>
             ))}
           </ul>
           <a

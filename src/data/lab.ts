@@ -1,3 +1,8 @@
+export type LabStackItem = {
+  label: string;
+  icon?: string;
+};
+
 export const lab = {
   project: "homelab-gitops",
   tagline: "A retired laptop, governed entirely by Git, running LLM agents.",
@@ -17,15 +22,15 @@ export const lab = {
     { value: "10 day", label: "metrics retention — VictoriaMetrics" },
   ],
   stack: [
-    "k3s",
-    "ArgoCD",
-    "Debian 13",
-    "Docker",
-    "Python",
-    "OpenAI API",
-    "Phoenix",
-    "VictoriaMetrics",
-    "Pi-hole",
-    "Tailscale",
-  ],
+    { label: "k3s", icon: "k3s" },
+    { label: "ArgoCD", icon: "argo" },
+    { label: "Debian 13", icon: "debian" },
+    { label: "Docker", icon: "docker" },
+    { label: "Python", icon: "python" },
+    { label: "OpenAI API", icon: "openai" },
+    { label: "Phoenix" },
+    { label: "VictoriaMetrics", icon: "victoriametrics" },
+    { label: "Pi-hole", icon: "pihole" },
+    { label: "Tailscale", icon: "tailscale" },
+  ] as LabStackItem[],
 } as const;

@@ -73,13 +73,25 @@
   color: var(--color-fg-muted);
 }
 
+.stack li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
 .stack li::before {
-  content: "· ";
+  content: "·";
   color: var(--color-border);
 }
 
 .stack li:first-child::before {
   content: "";
+}
+
+.stackIcon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .repoLink {

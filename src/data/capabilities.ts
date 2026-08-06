@@ -1,7 +1,12 @@
+export type CapabilityItem = {
+  label: string;
+  icon?: string;
+};
+
 export type CapabilityGroup = {
   id: string;
   title: string;
-  items: string[];
+  items: CapabilityItem[];
 };
 
 export const capabilityGroups: CapabilityGroup[] = [
@@ -9,54 +14,61 @@ export const capabilityGroups: CapabilityGroup[] = [
     id: "product",
     title: "Product",
     items: [
-      "Product Strategy & Roadmap",
-      "Product Discovery & Delivery",
-      "Agile — Scrum, Kanban, Scrumban",
-      "Stakeholder Management",
-      "Data-Driven Product Development",
-      "Go-to-Market Strategy",
-      "LATAM Digital Markets",
+      { label: "Product Strategy & Roadmap" },
+      { label: "Product Discovery & Delivery" },
+      { label: "Agile — Scrum, Kanban, Scrumban" },
+      { label: "Stakeholder Management" },
+      { label: "Data-Driven Product Development" },
+      { label: "Go-to-Market Strategy" },
+      { label: "LATAM Digital Markets" },
     ],
   },
   {
     id: "data",
     title: "Data",
     items: [
-      "SQL",
-      "BigQuery",
-      "MySQL",
-      "Tableau",
-      "Looker",
-      "Data Studio",
-      "Google Cloud Platform",
+      { label: "SQL" },
+      { label: "BigQuery", icon: "googlebigquery" },
+      { label: "MySQL", icon: "mysql" },
+      { label: "Tableau", icon: "tableau" },
+      { label: "Looker", icon: "looker" },
+      { label: "Data Studio" },
+      { label: "Google Cloud Platform", icon: "googlecloud" },
     ],
   },
   {
     id: "engineering",
     title: "Engineering",
     items: [
-      "TypeScript & Next.js",
-      "Python",
-      "Kubernetes & ArgoCD — GitOps",
-      "Docker",
+      { label: "TypeScript", icon: "typescript" },
+      { label: "Next.js", icon: "nextdotjs" },
+      { label: "Python", icon: "python" },
+      { label: "Kubernetes", icon: "kubernetes" },
+      { label: "ArgoCD", icon: "argo" },
+      { label: "GitOps" },
+      { label: "Docker", icon: "docker" },
     ],
   },
   {
     id: "ai-tooling",
     title: "AI Tooling",
     items: [
-      "OpenAI APIs",
-      "LangChain",
-      "Claude Code",
-      "Cursor",
-      "Openclaw",
-      "V0 by Vercel",
+      { label: "OpenAI APIs", icon: "openai" },
+      { label: "LangChain", icon: "langchain" },
+      { label: "Claude Code", icon: "claude" },
+      { label: "Cursor", icon: "cursor" },
+      { label: "Openclaw" },
+      { label: "V0 by Vercel", icon: "vercel" },
     ],
   },
   {
     id: "tools",
     title: "Tools",
-    items: ["Jira", "Notion", "Figma"],
+    items: [
+      { label: "Jira", icon: "jira" },
+      { label: "Notion", icon: "notion" },
+      { label: "Figma", icon: "figma" },
+    ],
   },
 ];
 

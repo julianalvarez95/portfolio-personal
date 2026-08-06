@@ -11,6 +11,9 @@
 }
 
 .email {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.75rem, 5vw, 3rem);
@@ -27,6 +30,12 @@
   border-color: var(--color-accent);
 }
 
+.emailIcon {
+  width: 0.7em;
+  height: 0.7em;
+  flex-shrink: 0;
+}
+
 .links {
   display: flex;
   flex-wrap: wrap;
@@ -38,11 +47,20 @@
 }
 
 .links a {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
   text-decoration: none;
   color: var(--color-fg-muted);
   border-bottom: 1px solid transparent;
   transition: color var(--duration-standard) var(--ease-standard),
     border-color var(--duration-standard) var(--ease-standard);
+}
+
+.linkIcon {
+  width: 1em;
+  height: 1em;
+  flex-shrink: 0;
 }
 
 .links a:hover {

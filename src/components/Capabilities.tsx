@@ -1,5 +1,6 @@
 import { capabilityGroups, languages } from "@/data/capabilities";
 import { SectionHeading } from "./SectionHeading";
+import { BrandIcon } from "./icons/BrandIcon";
 import styles from "./Capabilities.module.css";
 
 export function Capabilities() {
@@ -13,7 +14,12 @@ export function Capabilities() {
               <h3 className={styles.groupTitle}>{group.title}</h3>
               <ul className={styles.list}>
                 {group.items.map((item) => (
-                  <li key={item}>{item}</li>
+                  <li key={item.label}>
+                    {item.icon && (
+                      <BrandIcon icon={item.icon} className={styles.itemIcon} />
+                    )}
+                    <span>{item.label}</span>
+                  </li>
                 ))}
               </ul>
             </div>
