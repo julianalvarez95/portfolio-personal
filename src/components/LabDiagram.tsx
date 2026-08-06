@@ -10,7 +10,12 @@ const LOOP_NODES = [
 
 export function LabDiagram() {
   return (
-    <div className={styles.diagram} role="img" aria-label="GitOps reconciliation loop: a git push is picked up by ArgoCD, applied to the k3s cluster, run by the morning-digest and watchdog agents, and delivered via Telegram — with tracing branching off to Phoenix and VictoriaMetrics.">
+    <div
+      id="lab-diagram"
+      className={styles.diagram}
+      role="img"
+      aria-label="GitOps reconciliation loop: a git push is picked up by ArgoCD, applied to the k3s cluster, run by the morning-digest and watchdog agents, and delivered via Telegram — with tracing branching off to Phoenix and VictoriaMetrics."
+    >
       <div className={styles.row}>
         {LOOP_NODES.map((node, i) => (
           <div className={styles.step} key={node.label}>

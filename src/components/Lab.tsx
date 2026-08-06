@@ -35,6 +35,13 @@ export async function Lab() {
             Actual daily output from the morning-digest CronJob above, pulled
             in via a Vercel Eve agent.
           </span>
+          <span className={styles.liveTag}>
+            <span className={styles.liveDot} aria-hidden="true" />
+            Live
+          </span>
+          <a className={styles.pipelineLink} href="#lab-diagram">
+            ↑ View pipeline
+          </a>
         </div>
         <MorningDigestCarousel slides={digestSlides} />
 
