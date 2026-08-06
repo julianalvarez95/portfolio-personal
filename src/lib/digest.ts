@@ -102,7 +102,7 @@ export async function getDigests(): Promise<Digest[]> {
     try {
       const res = await fetch(DIGEST_AGENT_URL, {
         headers: { "X-Digest-Secret": secret },
-        next: { revalidate: 3600 },
+        cache: "no-store",
       });
       if (res.ok) {
         const data = (await res.json()) as { digests?: Digest[] };
