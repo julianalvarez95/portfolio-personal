@@ -39,3 +39,9 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# impeccable — session state and per-machine consent, not source.
+# .impeccable/mocks/ and .impeccable/sketches/ stay tracked: they carry
+# the approval record for design comps across sessions and machines.
+.impeccable/live/
+.impeccable/config.local.json
