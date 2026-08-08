@@ -9,17 +9,30 @@
   justify-content: space-between;
   height: 64px;
   padding: 0 var(--content-padding-x);
-  background: var(--color-bg);
+  background: var(--surface-page);
   border-bottom: var(--border-hairline);
 }
 
+/* Stamped like a part-plate: a bordered tile, not a wordmark. */
 .brand {
-  font-family: var(--font-mono);
-  font-weight: 600;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  font-family: var(--font-stencil);
   font-size: var(--text-meta);
   letter-spacing: var(--tracking-label);
-  color: var(--color-ink);
+  color: var(--text-primary);
+  border: 1px solid var(--border-default);
   text-decoration: none;
+  transition: border-color var(--dur-feedback) var(--ease-out-strong),
+    color var(--dur-feedback) var(--ease-out-strong);
+}
+
+.brand:hover {
+  color: var(--accent-solid);
+  border-color: var(--accent-solid);
 }
 
 .list {
@@ -37,15 +50,15 @@
   font-family: var(--font-mono);
   font-size: var(--text-meta-sm);
   text-decoration: none;
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   padding: var(--space-2) 0;
   border-bottom: 1px solid transparent;
-  transition: color var(--duration-standard) var(--ease-standard),
-    border-color var(--duration-standard) var(--ease-standard);
+  transition: color var(--dur-feedback) var(--ease-out-strong),
+    border-color var(--dur-feedback) var(--ease-out-strong);
 }
 
 .link:hover {
-  color: var(--color-ink);
+  color: var(--text-primary);
 }
 
 .linkIndex {
@@ -58,12 +71,12 @@
 }
 
 .active {
-  color: var(--color-ink);
-  border-bottom-color: var(--color-accent);
+  color: var(--text-primary);
+  border-bottom-color: var(--accent-solid);
 }
 
 .active .linkIndex {
-  color: var(--color-accent);
+  color: var(--accent-solid);
 }
 
 @media (max-width: 640px) {

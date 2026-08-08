@@ -57,7 +57,7 @@ export function useMagnetic<T extends HTMLElement>(options: MagneticOptions = {}
         const px = clamp(dx * strength * t, -maxPull, maxPull);
         const py = clamp(dy * strength * t, -maxPull, maxPull);
         el!.style.transform = `translate(${px.toFixed(1)}px, ${py.toFixed(1)}px)`;
-        el!.style.color = t > 0.3 ? "var(--color-accent)" : "";
+        el!.style.color = t > 0.3 ? "var(--accent-solid)" : "";
       } else {
         el!.style.transform = "";
         el!.style.color = "";

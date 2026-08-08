@@ -51,3 +51,4 @@ next-env.d.ts
 .impeccable/live/
 .impeccable/config.local.json
 .impeccable/questions/
+.impeccable/hook.cache.json

@@ -4,56 +4,68 @@
   Tier 1 — raw palette below. 12-step ramps (Radix-style semantics: 1 =
   page background … 6 = subtle border … 9 = solid fill … 11 = muted text
   … 12 = max-contrast text), plus alpha overlay anchors and single-step
-  signal hues. Right now these values reproduce the site's current
-  editorial-crema look exactly — the chosen direction is what gets to
-  fill them for real (Fase F). No component may reference a Tier 1
-  token directly.
+  signal hues. Fase F fill: EXPLODED VIEW's cyanotype-blueprint register —
+  a genuinely saturated deep Prussian blue ground (not a desaturated
+  near-black-navy), brick-red/safety-orange accent, muted brass for held
+  inventory. No component may reference a Tier 1 token directly.
 
   Tier 2 — semantic roles, below that. `--surface-*`, `--text-*`,
-  `--border-*`, `--fill-*`, `--signal-*`. Every component reads only
-  from here.
+  `--border-*`, `--fill-*`, `--signal-*`, `--material-*`. Every component
+  reads only from here.
 */
 
 :root {
-  /* Tier 1 — neutral ramp */
-  --neutral-1: #f5f4f0;
-  --neutral-2: #f0eee8;
-  --neutral-3: #eae8e1;
-  --neutral-4: #e2ded4;
-  --neutral-5: #dfdcd2;
-  --neutral-6: #dad8d0;
-  --neutral-7: #c9c6ba;
-  --neutral-8: #b6b3a5;
-  --neutral-9: #8f8c80;
-  --neutral-10: #7c7a6e;
-  --neutral-11: #6b6b66;
-  --neutral-12: #141414;
+  /* Tier 1 — neutral ramp (cyanotype blue: deep page ground → white
+     ruled-linework text, never gray — see new-work.md §67) */
+  --neutral-1: #0a2645;
+  --neutral-2: #0e2f52;
+  --neutral-3: #12395f;
+  --neutral-4: #17436d;
+  --neutral-5: #1d4d7a;
+  --neutral-6: #3f6e98;
+  --neutral-7: #6089ac;
+  --neutral-8: #83a8c7;
+  --neutral-9: #aac6dd;
+  --neutral-10: #c7dbec;
+  --neutral-11: #d9e7f2;
+  --neutral-12: #f4f8fc;
 
-  /* Tier 1 — accent ramp */
-  --accent-1: #fff4f0;
-  --accent-2: #ffe9e0;
-  --accent-3: #ffd6c4;
-  --accent-4: #ffc0a3;
-  --accent-5: #ffaa82;
-  --accent-6: #ff9364;
-  --accent-7: #fd7c48;
-  --accent-8: #ff6530;
-  --accent-9: #ff4b1e;
-  --accent-10: #e2410a;
-  --accent-11: #c93a08;
-  --accent-12: #7a2405;
+  /* Tier 1 — accent ramp (brick-red / safety-orange — "the step being
+     built now") */
+  --accent-1: #2a140a;
+  --accent-2: #3c1c0c;
+  --accent-3: #52240d;
+  --accent-4: #6b2c0c;
+  --accent-5: #87330b;
+  --accent-6: #a53c10;
+  --accent-7: #c04517;
+  --accent-8: #d64f1c;
+  --accent-9: #e35a24;
+  --accent-10: #ef6c34;
+  --accent-11: #f68a52;
+  --accent-12: #ffe3d2;
 
-  /* Tier 1 — alpha overlay anchors (scrims, composited over any surface) */
+  /* Tier 1 — alpha overlay anchors (scrims, composited over any surface).
+     Black for depth/shadow; white for hover/press highlights on a dark
+     ground — a blueprint's scrims lighten, they don't darken. */
   --overlay-black-a1: rgb(0 0 0 / 0.04);
   --overlay-black-a3: rgb(0 0 0 / 0.12);
   --overlay-black-a6: rgb(0 0 0 / 0.32);
   --overlay-black-a9: rgb(0 0 0 / 0.64);
   --overlay-black-a12: rgb(0 0 0 / 0.92);
+  --overlay-white-a1: rgb(255 255 255 / 0.04);
+  --overlay-white-a3: rgb(255 255 255 / 0.1);
+  --overlay-white-a6: rgb(255 255 255 / 0.22);
+  --overlay-white-a9: rgb(255 255 255 / 0.5);
+  --overlay-white-a12: rgb(255 255 255 / 0.92);
 
   /* Tier 1 — signal hues (single-step solid anchors, not full ramps) */
-  --signal-positive-9: #2f9e44;
-  --signal-caution-9: #e8a712;
+  --signal-positive-9: #4caf6a;
+  --signal-caution-9: #e0a930;
   --signal-critical-9: #d1373f;
+
+  /* Tier 1 — material anchor: muted brass, "inventory held in reserve" */
+  --material-brass-9: #a8824f;
 
   /* Tier 2 — surface roles */
   --surface-page: var(--neutral-1);
@@ -85,19 +97,8 @@
   --signal-caution: var(--signal-caution-9);
   --signal-critical: var(--signal-critical-9);
 
-  /*
-    Migration aliases — the six color names every existing .module.css
-    still reads. Delete each line only when its last remaining component
-    is rewritten (Fase F); until then this keeps all 18 CSS Modules
-    compiling against Tier 2 without edits, and the page stays pixel
-    for pixel identical.
-  */
-  --color-bg: var(--surface-page);
-  --color-ink: var(--text-primary);
-  --color-fg-muted: var(--text-muted);
-  --color-border: var(--border-subtle);
-  --color-surface: var(--surface-raised);
-  --color-accent: var(--accent-solid);
+  /* Tier 2 — material role: held inventory (Capabilities, reserve states) */
+  --material-reserve: var(--material-brass-9);
 
   /* Spacing (8px base unit) */
   --space-1: 4px;
@@ -121,7 +122,7 @@
   --radius-none: 0px;
 
   /* Borders */
-  --border-hairline: 1px solid var(--color-border);
+  --border-hairline: 1px solid var(--border-subtle);
 
   /* Typography scale */
   --text-hero: clamp(3rem, 9vw, 8.5rem);
@@ -174,16 +175,6 @@
   --stagger-tight: 40ms;
   --stagger-normal: 70ms;
   --stagger-loose: 110ms;
-
-  /*
-    Migration aliases for the two motion tokens every existing
-    .module.css still reads — kept at their exact original values (not
-    re-pointed at the new pairs above, which run on a different, faster
-    cadence) so timing stays identical until each module is rewritten
-    to use the new vocabulary directly in Fase F.
-  */
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-standard: 240ms;
 }
 
 @media (max-width: 640px) {

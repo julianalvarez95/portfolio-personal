@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
-import { fontDisplay, fontMono } from "./fonts";
+import { fontDisplay, fontMono, fontStencil } from "./fonts";
 import { site } from "@/data/site";
 import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
@@ -22,12 +22,15 @@ export const metadata: Metadata = {
 // --neutral-1); update it here too whenever that value changes.
 export const viewport: Viewport = {
   colorScheme: "dark",
-  themeColor: "#f5f4f0",
+  themeColor: "#0a2645",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${fontDisplay.variable} ${fontMono.variable}`}>
+    <html
+      lang="en"
+      className={`${fontDisplay.variable} ${fontMono.variable} ${fontStencil.variable}`}
+    >
       <body>
         {/*
           React has no public API for a bare top-level HTML comment node,

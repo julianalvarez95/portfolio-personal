@@ -1,5 +1,6 @@
 .magnetic {
   display: inline-block;
-  transition: transform 0.12s var(--ease-standard), color 0.12s var(--ease-standard);
+  transition: transform var(--dur-feedback) var(--ease-out-strong),
+    color var(--dur-feedback) var(--ease-out-strong);
   will-change: transform;
 }

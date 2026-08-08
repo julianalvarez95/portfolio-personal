@@ -17,19 +17,19 @@
   font-family: var(--font-display);
   font-weight: 600;
   font-size: clamp(1.75rem, 5vw, 3rem);
-  color: var(--color-ink);
+  color: var(--text-primary);
   text-decoration: none;
   width: fit-content;
   max-width: 100%;
   overflow-wrap: anywhere;
-  border-bottom: 1px solid var(--color-border);
-  transition: border-color var(--duration-standard) var(--ease-standard),
-    color var(--duration-standard) var(--ease-standard);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: border-color var(--dur-feedback) var(--ease-out-strong),
+    color var(--dur-feedback) var(--ease-out-strong);
 }
 
 .email:hover {
-  color: var(--color-accent);
-  border-color: var(--color-accent);
+  color: var(--accent-solid);
+  border-color: var(--accent-solid);
 }
 
 .emailIcon {
@@ -38,10 +38,12 @@
   flex-shrink: 0;
 }
 
+/* The manual's back-cover legend — same bordered-plate grammar as Hero's
+   front-cover legend. */
 .links {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-6);
+  gap: var(--space-3);
   font-family: var(--font-mono);
   font-size: var(--text-meta);
   text-transform: uppercase;
@@ -52,11 +54,14 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
   text-decoration: none;
-  color: var(--color-fg-muted);
-  border-bottom: 1px solid transparent;
-  transition: color var(--duration-standard) var(--ease-standard),
-    border-color var(--duration-standard) var(--ease-standard);
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  transition: color var(--dur-feedback) var(--ease-out-strong),
+    border-color var(--dur-feedback) var(--ease-out-strong),
+    background var(--dur-feedback) var(--ease-out-strong),
+    transform var(--dur-feedback) var(--ease-out-strong);
 }
 
 .linkIcon {
@@ -66,8 +71,13 @@
 }
 
 .links a:hover {
-  color: var(--color-ink);
-  border-color: var(--color-accent);
+  color: var(--accent-solid);
+  border-color: var(--accent-solid);
+  background: var(--overlay-white-a3);
+}
+
+.links a:active {
+  transform: scale(0.98);
 }
 
 .footer {
@@ -79,7 +89,7 @@
   border-top: var(--border-hairline);
   font-family: var(--font-mono);
   font-size: var(--text-meta-sm);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
 }
 
 .education {

@@ -23,14 +23,46 @@ html {
 }
 
 body {
+  position: relative;
   min-height: 100%;
-  background: var(--color-bg);
-  color: var(--color-ink);
+  background: var(--surface-page);
+  color: var(--text-primary);
   font-family: var(--font-display), system-ui, arial, sans-serif;
   font-size: var(--text-body);
   line-height: var(--leading-body);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+/* The "visible module grid" the direction contract names — one global
+   layer instead of duplicating a grid pattern per section. Faint enough
+   to read as blueprint paper, not a debug overlay. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--overlay-white-a1) 0,
+      var(--overlay-white-a1) 1px,
+      transparent 1px,
+      transparent var(--space-9)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--overlay-white-a1) 0,
+      var(--overlay-white-a1) 1px,
+      transparent 1px,
+      transparent var(--space-9)
+    );
+}
+
+body > * {
+  position: relative;
+  z-index: 1;
 }
 
 a {

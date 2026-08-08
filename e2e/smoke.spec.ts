@@ -47,11 +47,15 @@ test.describe("smoke", () => {
     page,
   }) => {
     await page.goto("/");
-    const cv = page.getByRole("link", { name: "Download CV" });
+    // Fase F.2: EXPLODED VIEW repeats both actions as a permanent legend in
+    // Hero, on top of Contact's own copy — "peers, never hidden" means never
+    // buried below the fold either. .first() keeps the intent (visible,
+    // correct href) without assuming there's exactly one anymore.
+    const cv = page.getByRole("link", { name: "Download CV" }).first();
     await expect(cv).toBeVisible();
     await expect(cv).toHaveAttribute("href", "/julian-alvarez-profile.pdf");
 
-    const email = page.locator('a[href^="mailto:"]');
+    const email = page.locator('a[href^="mailto:"]').first();
     await expect(email).toBeVisible();
     await expect(email).toHaveAttribute(
       "href",

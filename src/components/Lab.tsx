@@ -8,7 +8,8 @@ import { BrandIcon } from "./icons/BrandIcon";
 import styles from "./Lab.module.css";
 
 export async function Lab() {
-  const digestSlides = flattenDigests(await getDigests());
+  const { digests, live } = await getDigests();
+  const digestSlides = flattenDigests(digests);
 
   return (
     <section id="lab" className="section">
@@ -36,9 +37,12 @@ export async function Lab() {
             Actual daily output from the morning-digest CronJob above, pulled
             in via a Vercel Eve agent.
           </span>
-          <span className={styles.liveTag}>
-            <span className={styles.liveDot} aria-hidden="true" />
-            Live
+          <span className={live ? styles.liveTag : styles.simulatedTag}>
+            <span
+              className={live ? styles.liveDot : styles.simulatedDot}
+              aria-hidden="true"
+            />
+            {live ? "Live" : "Simulated feed"}
           </span>
           <a className={styles.pipelineLink} href="#lab-diagram">
             ↑ View pipeline

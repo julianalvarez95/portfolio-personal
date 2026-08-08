@@ -7,21 +7,33 @@
 
 .row {
   display: flex;
-  align-items: baseline;
-  gap: var(--space-3);
+  align-items: center;
+  gap: var(--space-4);
+}
+
+/* A stencil card the numeral sits on — the "module grid" motif at
+   section-heading scale. */
+.plate {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-2) var(--space-3);
+  border: 1px solid var(--border-default);
+  background: var(--overlay-white-a1);
 }
 
 .index {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  color: var(--color-accent);
+  font-family: var(--font-stencil);
+  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  line-height: 1;
+  color: var(--accent-solid);
   letter-spacing: var(--tracking-label);
 }
 
 .slash {
   font-family: var(--font-mono);
   font-size: var(--text-meta);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
 }
 
 .title {
@@ -30,13 +42,21 @@
   font-size: var(--text-section-heading);
   line-height: var(--leading-heading);
   letter-spacing: var(--tracking-tight);
-  color: var(--color-ink);
+  color: var(--text-primary);
   text-transform: uppercase;
   margin: 0;
 }
 
 .rule {
   height: 1px;
-  background: var(--color-border);
+  background: var(--border-subtle);
   width: 100%;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform var(--dur-focal) var(--ease-arrival);
+  transition-delay: var(--stagger-tight);
+}
+
+.wrap[data-revealed] .rule {
+  transform: scaleX(1);
 }

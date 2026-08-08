@@ -1,5 +1,5 @@
 import localFont from "next/font/local";
-import { IBM_Plex_Mono } from "next/font/google";
+import { Allerta_Stencil, Fragment_Mono } from "next/font/google";
 
 export const fontDisplay = localFont({
   src: [
@@ -29,10 +29,23 @@ export const fontDisplay = localFont({
   fallback: ["system-ui", "arial"],
 });
 
-export const fontMono = IBM_Plex_Mono({
+// IBM Plex Mono is on new-work.md §63's training-data-default list — "tech
+// wanting a mono" is exactly the association that list exists to break.
+// Fragment Mono reads as manual/annotation lettering, not generic dev-mono.
+export const fontMono = Fragment_Mono({
   subsets: ["latin"],
-  weight: ["400", "500", "600"],
+  weight: "400", // Fragment Mono ships a single static weight.
   variable: "--font-mono",
   display: "swap",
   fallback: ["ui-monospace", "monospace"],
+});
+
+// Reserved for oversized step numerals only (SectionHeading, Hero) — never
+// body copy. The direction's own "oversized stencil step numerals" line.
+export const fontStencil = Allerta_Stencil({
+  subsets: ["latin"],
+  weight: "400",
+  variable: "--font-stencil",
+  display: "swap",
+  fallback: ["system-ui", "arial"],
 });

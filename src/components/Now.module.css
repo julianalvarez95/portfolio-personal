@@ -4,12 +4,26 @@
   gap: var(--space-8);
 }
 
+.statusCol {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.status {
+  font-family: var(--font-mono);
+  font-size: var(--text-label);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-label);
+  color: var(--accent-solid);
+}
+
 .bio {
   font-family: var(--font-display);
   font-weight: 400;
   font-size: var(--text-body-lg);
   line-height: var(--leading-body);
-  color: var(--color-ink);
+  color: var(--text-primary);
   max-width: 68ch;
 }
 
