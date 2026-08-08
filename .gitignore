@@ -45,3 +45,4 @@ next-env.d.ts
 # the approval record for design comps across sessions and machines.
 .impeccable/live/
 .impeccable/config.local.json
+.impeccable/questions/
