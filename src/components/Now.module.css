@@ -10,14 +10,6 @@
   gap: var(--space-4);
 }
 
-.status {
-  font-family: var(--font-mono);
-  font-size: var(--text-label);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--accent-solid);
-}
-
 .bio {
   font-family: var(--font-display);
   font-weight: 400;

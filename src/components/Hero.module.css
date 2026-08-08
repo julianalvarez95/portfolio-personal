@@ -32,14 +32,6 @@
   gap: var(--space-6);
 }
 
-.manifest {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--material-reserve);
-}
-
 .name {
   font-family: var(--font-display);
   font-weight: 700;
@@ -126,7 +118,7 @@
 
 .legendKey {
   font-family: var(--font-stencil);
-  color: var(--material-reserve);
+  color: var(--text-muted);
 }
 
 .bottomRow {

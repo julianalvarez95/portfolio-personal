@@ -48,7 +48,6 @@ export function Hero() {
       </svg>
 
       <div className={`container ${styles.top}`}>
-        <span className={styles.manifest}>Contents —</span>
         <h1 className={styles.name}>{site.name}</h1>
         <dl className={styles.specs}>
           <div className={styles.spec}>

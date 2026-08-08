@@ -24,7 +24,7 @@
 
 .index {
   font-family: var(--font-stencil);
-  font-size: clamp(1.5rem, 4vw, 2.5rem);
+  font-size: var(--text-index-stencil);
   line-height: 1;
   color: var(--accent-solid);
   letter-spacing: var(--tracking-label);

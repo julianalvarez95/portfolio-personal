@@ -12,12 +12,21 @@ export function StatBlock({
   value,
   label,
   accent,
-  compact,
+  variant,
 }: {
   value: string;
   label: string;
   accent?: boolean;
-  compact?: boolean;
+  /**
+   * Distinct blueprint-native readouts sharing one animated core
+   * (count-up, proximity-driven accent) instead of one template repeated
+   * verbatim per section: `ledger` (Now's inline dimension-line strip),
+   * `plate` (CaseStudy's stamped spec panel), `bracket` (Lab's
+   * instrument-gauge readout). Required, not defaulted — a call site
+   * that doesn't choose one is exactly how the banned generic template
+   * creeps back in.
+   */
+  variant: "ledger" | "plate" | "bracket";
 }) {
   const { ref: inViewRef, inView } = useInView<HTMLDivElement>();
   const proximityRef = useProximity<HTMLDivElement>(PROXIMITY_PX);
@@ -29,9 +38,7 @@ export function StatBlock({
     proximityRef.current = el;
   };
 
-  const classes = [styles.block, compact ? styles.compact : ""]
-    .filter(Boolean)
-    .join(" ");
+  const classes = [styles.block, styles[variant]].filter(Boolean).join(" ");
   const valueClasses = [styles.value, accent ? styles.accent : ""]
     .filter(Boolean)
     .join(" ");

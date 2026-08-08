@@ -1,17 +1,17 @@
 .header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-2) var(--space-4);
+  flex-direction: column;
+  gap: var(--space-2);
   margin-bottom: var(--space-5);
 }
 
+/* Real sub-heading, not a kicker above one — the craft floor bans a label
+   sitting above a heading with no exception, so this carries the weight
+   itself instead of announcing content below it. */
 .project {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
+  font-family: var(--font-display);
+  font-size: var(--text-case-title);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
   color: var(--text-primary);
 }
 
@@ -45,11 +45,18 @@
 
 .digestHeader {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-5);
+}
+
+.digestMeta {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-5);
+  padding-top: var(--space-2);
 }
 
 .footer {

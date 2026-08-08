@@ -64,8 +64,11 @@
   --signal-caution-9: #e0a930;
   --signal-critical-9: #d1373f;
 
-  /* Tier 1 — material anchor: muted brass, "inventory held in reserve" */
-  --material-brass-9: #a8824f;
+  /* Tier 1 — material anchor: muted brass, "inventory held in reserve".
+     #b28c58, not the initial #a8824f — 4.93:1 on --neutral-1 clears the
+     4.5:1 text floor with margin (the initial value tested at 4.34:1,
+     failed for the small mono labels that read it). */
+  --material-brass-9: #b28c58;
 
   /* Tier 2 — surface roles */
   --surface-page: var(--neutral-1);
@@ -86,10 +89,13 @@
   --text-muted: var(--neutral-11);
   --text-primary: var(--neutral-12);
 
-  /* Tier 2 — accent roles */
-  --accent-solid: var(--accent-9);
-  --accent-solid-hover: var(--accent-10);
-  --accent-text: var(--accent-9);
+  /* Tier 2 — accent roles. --accent-solid reads step 10, not 9: 9 tested
+     at 4.18:1 on --neutral-1, under the 4.5:1 text floor, and this token
+     is read as text everywhere (kickers, indices, subIndex, stat values).
+     Hover moves to 11 to keep a visible step above the resting solid. */
+  --accent-solid: var(--accent-10);
+  --accent-solid-hover: var(--accent-11);
+  --accent-text: var(--accent-10);
 
   /* Tier 2 — signal roles */
   --signal-live: var(--accent-9); /* today's "Live" dot piggybacks on accent — see Lab.module.css .liveDot */
@@ -129,6 +135,14 @@
   --text-section-heading: clamp(2rem, 5vw, 3.5rem);
   --text-case-title: clamp(1.5rem, 3vw, 2rem);
   --text-stat: clamp(2.5rem, 6vw, 5.5rem);
+  /* StatBlock's `ledger` variant (Now's inline dimension-line strip) —
+     a real ramp step, not a one-off clamp, since more than one reader
+     needs "a stat number, smaller than --text-stat" going forward. */
+  --text-stat-sm: clamp(1.25rem, 2.4vw, 1.75rem);
+  /* Oversized stencil section-index numerals (SectionHeading's "02",
+     "05"…) — the contract's own "oversized stencil step numerals" line,
+     named as a ramp step since Fase F.2 first wrote it as a bare clamp. */
+  --text-index-stencil: clamp(1.5rem, 4vw, 2.5rem);
   --text-body-lg: 1.125rem;
   --text-body: 1rem;
   --text-meta: 0.875rem;

@@ -1,0 +1,156 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-08-08T00:00:00Z",
+  "title": "Design System: Julian Alvarez — Portfolio",
+  "extensions": {
+    "colorMeta": {
+      "page-ground": {
+        "role": "primary",
+        "displayName": "Cyanotype Ground",
+        "canonical": "#0a2645",
+        "tonalRamp": ["#0a2645", "#0e2f52", "#12395f", "#17436d", "#1d4d7a", "#3f6e98", "#6089ac", "#83a8c7"]
+      },
+      "accent-solid": {
+        "role": "primary",
+        "displayName": "Assembly Orange",
+        "canonical": "#ef6c34",
+        "tonalRamp": ["#2a140a", "#3c1c0c", "#52240d", "#6b2c0c", "#87330b", "#a53c10", "#c04517", "#d64f1c", "#e35a24", "#ef6c34", "#f68a52", "#ffe3d2"]
+      },
+      "material-reserve": {
+        "role": "secondary",
+        "displayName": "Muted Brass",
+        "canonical": "#b28c58",
+        "tonalRamp": ["#b28c58"]
+      },
+      "text-primary": {
+        "role": "neutral",
+        "displayName": "Ruled White",
+        "canonical": "#f4f8fc"
+      },
+      "text-muted": {
+        "role": "neutral",
+        "displayName": "Faded Linework",
+        "canonical": "#d9e7f2"
+      },
+      "border-subtle": {
+        "role": "neutral",
+        "displayName": "Hairline Border",
+        "canonical": "#3f6e98"
+      },
+      "signal-positive": { "role": "signal", "displayName": "Signal Positive", "canonical": "#4caf6a" },
+      "signal-caution": { "role": "signal", "displayName": "Signal Caution", "canonical": "#e0a930" },
+      "signal-critical": { "role": "signal", "displayName": "Signal Critical", "canonical": "#d1373f" }
+    },
+    "typographyMeta": {
+      "hero": { "displayName": "Hero", "purpose": "The name on Hero's cover page only." },
+      "section-heading": { "displayName": "Section Heading", "purpose": "One per section, paired with a stencil index plate." },
+      "stat": { "displayName": "Stat", "purpose": "StatBlock values across ledger/plate/bracket variants." },
+      "stencil-numeral": { "displayName": "Stencil Numeral", "purpose": "Numerals and the two-letter Nav brand mark only, never full words." },
+      "label": { "displayName": "Label/Meta", "purpose": "Nav labels, spec keys, bylines, stat labels, tags." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "dur-feedback", "value": "120ms", "purpose": "Hover, press, focus, color transitions." },
+      { "name": "dur-popover", "value": "160ms", "purpose": "Tooltip, in-place reveal." },
+      { "name": "dur-dropdown", "value": "200ms", "purpose": "Menu, accordion, disclosure panels." },
+      { "name": "dur-overlay", "value": "320ms", "purpose": "Drawer, full-bleed panel." },
+      { "name": "dur-focal", "value": "640ms", "purpose": "Authored focal moments; at most one per screen." },
+      { "name": "ease-out-strong", "value": "cubic-bezier(0.23, 1, 0.32, 1)", "purpose": "Arriving at rest." },
+      { "name": "ease-in-out-strong", "value": "cubic-bezier(0.77, 0, 0.175, 1)", "purpose": "A-to-B where both ends are states." },
+      { "name": "ease-drawer", "value": "cubic-bezier(0.32, 0.72, 0, 1)", "purpose": "Large surfaces from off-screen." },
+      { "name": "ease-arrival", "value": "cubic-bezier(0.16, 1, 0.3, 1)", "purpose": "Authored focal moments." },
+      { "name": "dotPulse-exception", "value": "2.4s ease-out-strong infinite", "purpose": "The one hand-authored animation outside the duration/easing pairing system: the Lab digest's ambient continuous Live-signal dot, not a discrete state transition. Documented as an intentional exception in tokens.css with its own prefers-reduced-motion guard." }
+    ],
+    "breakpoints": [
+      { "name": "mobile-padding", "value": "640px" },
+      { "name": "section-rhythm", "value": "768px" },
+      { "name": "capabilities-2col", "value": "640px" },
+      { "name": "capabilities-5col", "value": "1024px" },
+      { "name": "assembly-rail-reveal", "value": "1400px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Legend Link",
+      "kind": "button",
+      "refersTo": "legend-link",
+      "description": "Hero front-cover and Contact back-cover action link — bordered plate with a stencil-numeral key.",
+      "html": "<a class=\"ds-legend-link\" href=\"#\"><span class=\"ds-legend-key\">01</span>Contact</a>",
+      "css": ".ds-legend-link { display: inline-flex; align-items: center; gap: 12px; padding: 12px 24px; font-family: 'Fragment Mono', ui-monospace, monospace; font-size: 0.875rem; text-transform: uppercase; letter-spacing: 0.08em; color: #f4f8fc; text-decoration: none; border: 1px solid #6089ac; transition: border-color 120ms cubic-bezier(0.23,1,0.32,1), background 120ms cubic-bezier(0.23,1,0.32,1), color 120ms cubic-bezier(0.23,1,0.32,1); } .ds-legend-link:hover, .ds-legend-link:focus-visible { border-color: #ef6c34; color: #ef6c34; background: rgb(255 255 255 / 0.1); } .ds-legend-link:active { transform: scale(0.98); } .ds-legend-key { font-family: 'Allerta Stencil', system-ui, arial, sans-serif; color: #d9e7f2; }"
+    },
+    {
+      "name": "Nav Bar",
+      "kind": "nav",
+      "refersTo": "nav-link-active",
+      "description": "Fixed top navigation with a stamped brand tile and mono index+label links.",
+      "html": "<nav class=\"ds-nav\"><a class=\"ds-nav-brand\" href=\"#\">JA</a><a class=\"ds-nav-link ds-nav-link-active\" href=\"#\"><span class=\"ds-nav-index\">00</span><span class=\"ds-nav-label\">Index</span></a></nav>",
+      "css": ".ds-nav { display: flex; align-items: center; gap: 32px; height: 64px; padding: 0 24px; background: #0a2645; border-bottom: 1px solid #3f6e98; } .ds-nav-brand { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; font-family: 'Allerta Stencil', system-ui, arial, sans-serif; font-size: 0.875rem; letter-spacing: 0.08em; color: #f4f8fc; border: 1px solid #6089ac; text-decoration: none; } .ds-nav-link { display: inline-flex; align-items: baseline; gap: 8px; font-family: 'Fragment Mono', ui-monospace, monospace; font-size: 0.8125rem; text-decoration: none; color: #d9e7f2; border-bottom: 1px solid transparent; } .ds-nav-link-active { color: #f4f8fc; border-bottom-color: #ef6c34; } .ds-nav-link-active .ds-nav-index { color: #ef6c34; } .ds-nav-label { text-transform: uppercase; letter-spacing: 0.08em; }"
+    },
+    {
+      "name": "StatBlock — Ledger",
+      "kind": "custom",
+      "refersTo": "stat-plate",
+      "description": "Inline dimension-line stat: value+label pair on a ruled baseline. Used for dense quick facts (Now).",
+      "html": "<div class=\"ds-stat-ledger\"><span class=\"ds-stat-value\">10</span><span class=\"ds-stat-label\">Roles</span></div>",
+      "css": ".ds-stat-ledger { display: flex; flex-direction: row; align-items: baseline; gap: 8px; padding-bottom: 12px; border-bottom: 1px solid #3f6e98; } .ds-stat-ledger:hover { border-bottom-color: #ef6c34; } .ds-stat-value { font-family: 'General Sans', system-ui, sans-serif; font-weight: 700; font-size: clamp(1.25rem, 2.4vw, 1.75rem); color: #f4f8fc; font-variant-numeric: tabular-nums; } .ds-stat-label { font-family: 'Fragment Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #d9e7f2; }"
+    },
+    {
+      "name": "StatBlock — Plate",
+      "kind": "custom",
+      "refersTo": "stat-plate",
+      "description": "Bordered spec-panel cell with accent corner ticks. Used for CaseStudy impact metrics.",
+      "html": "<div class=\"ds-stat-plate\"><span class=\"ds-stat-value\">3x</span><span class=\"ds-stat-label\">Growth</span></div>",
+      "css": ".ds-stat-plate { position: relative; display: flex; flex-direction: column; gap: 8px; padding: 16px; border: 1px solid #3f6e98; } .ds-stat-plate:hover { border-color: #ef6c34; } .ds-stat-value { font-family: 'General Sans', system-ui, sans-serif; font-weight: 700; font-size: clamp(2.5rem, 6vw, 5.5rem); line-height: 1; color: #f4f8fc; font-variant-numeric: tabular-nums; } .ds-stat-label { font-family: 'Fragment Mono', ui-monospace, monospace; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.08em; color: #d9e7f2; }"
+    },
+    {
+      "name": "ArchiveRow",
+      "kind": "custom",
+      "refersTo": "legend-link",
+      "description": "Disclosure row for a career step: mono grid trigger (index, company, role, dates, toggle) expanding a detail panel.",
+      "html": "<div class=\"ds-archive-row\"><button class=\"ds-archive-trigger\"><span class=\"ds-archive-index\">01</span><span class=\"ds-archive-company\">Mercado Libre</span><span class=\"ds-archive-role\">Product Manager</span><span class=\"ds-archive-dates\">2022–2024</span><span class=\"ds-archive-toggle\">+</span></button></div>",
+      "css": ".ds-archive-row { border-top: 1px solid #3f6e98; } .ds-archive-trigger { width: 100%; display: grid; grid-template-columns: 2ch 1.4fr 1.6fr 1fr auto; align-items: center; gap: 16px; padding: 16px 0; background: none; border: none; cursor: pointer; text-align: left; font-family: 'Fragment Mono', ui-monospace, monospace; color: #f4f8fc; } .ds-archive-trigger:hover { background: rgb(255 255 255 / 0.1); } .ds-archive-index { font-size: 0.8125rem; color: #d9e7f2; } .ds-archive-company { font-size: 0.875rem; font-weight: 600; } .ds-archive-role, .ds-archive-dates { font-size: 0.8125rem; color: #d9e7f2; } .ds-archive-toggle { color: #ef6c34; justify-self: end; }"
+    },
+    {
+      "name": "SectionHeading",
+      "kind": "custom",
+      "refersTo": "nav-brand",
+      "description": "Section-level heading: stencil index plate + slash + uppercase title + reveal rule.",
+      "html": "<div class=\"ds-section-heading\"><div class=\"ds-sh-row\"><span class=\"ds-sh-plate\"><span class=\"ds-sh-index\">02</span></span><span class=\"ds-sh-slash\">/</span><h2 class=\"ds-sh-title\">Work</h2></div><div class=\"ds-sh-rule\"></div></div>",
+      "css": ".ds-section-heading { display: flex; flex-direction: column; gap: 16px; margin-bottom: 64px; } .ds-sh-row { display: flex; align-items: center; gap: 16px; } .ds-sh-plate { display: inline-flex; align-items: center; justify-content: center; padding: 8px 12px; border: 1px solid #6089ac; background: rgb(255 255 255 / 0.04); } .ds-sh-index { font-family: 'Allerta Stencil', system-ui, arial, sans-serif; font-size: clamp(1.5rem, 4vw, 2.5rem); color: #ef6c34; } .ds-sh-slash { font-family: 'Fragment Mono', ui-monospace, monospace; color: #d9e7f2; } .ds-sh-title { font-family: 'General Sans', system-ui, sans-serif; font-weight: 600; font-size: clamp(2rem, 5vw, 3.5rem); text-transform: uppercase; color: #f4f8fc; margin: 0; } .ds-sh-rule { height: 1px; background: #3f6e98; width: 100%; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Assembly Manual",
+    "overview": "The site is a technical manual for a career built like real hardware: a saturated Prussian-blue blueprint ground, white ruled linework, and oversized stencil numerals turn each section into a step in an assembly sequence rather than a scrolling highlight reel. This is EXPLODED VIEW, the challenger form chosen over the assigned SILKSCREEN direction — parts (roles, capabilities, the live digest) are laid out with dashed leader lines and index plates the way an assembly diagram explodes a product into its labeled components. The palette deliberately refuses both defaults it was built against: no near-black-navy standing in for 'dark mode,' and no neon-on-black 'developer portfolio' register — the blue reads as a genuinely saturated pigment, not a desaturated neutral. Brick-red/safety-orange marks 'the step being built now' — the one live accent, spent on the thing currently active. Muted brass is reserved inventory: it marks something real but not currently active, never a second decorative accent. Everything else is white-on-blue linework: hairline borders, ruled dividers, bordered plates standing in for shadows.",
+    "keyCharacteristics": [
+      "Saturated cyanotype-blue ground, never a desaturated near-black",
+      "One live accent (brick-red/safety-orange) spent only on \"what's active now\"",
+      "A second, strictly-scoped reserve color (muted brass) for inactive/held/simulated states",
+      "Borders and bordered plates instead of shadows; the system is flat and linework-driven",
+      "Oversized stencil numerals as the module-grid motif, reserved for numerals only",
+      "Mono labels and tabular-numeral stat readouts throughout, never a repeated single hero-metric template"
+    ],
+    "rules": [
+      { "name": "The One Live Step Rule", "body": "Assembly Orange marks only the thing currently active or being hovered/focused. It is not a decorative highlight color; a screen with orange scattered across unrelated static elements is off-system.", "section": "colors" },
+      { "name": "The Reserve, Not Secondary, Rule", "body": "Muted Brass marks inactive/held/simulated state only — an unexpanded group, a passed rail node, a disclosed-synthetic tag, a not-current sub-index. It never substitutes for Assembly Orange as a second \"pick me\" accent.", "section": "colors" },
+      { "name": "The Numerals-Only Stencil Rule", "body": "Allerta Stencil renders index numerals and the two-letter nav brand mark exclusively. It never sets a full word or sentence.", "section": "typography" },
+      { "name": "The Byline-Not-Kicker Rule", "body": "A mono label sitting directly above a heading with no informational content of its own is not part of this system. A mono line is only legitimate when it carries real facts on one baseline — row index + company + role + dates, company + dates + location, source + timestamp.", "section": "typography" },
+      { "name": "The Border-Over-Shadow Rule", "body": "Any surface that needs to read as \"raised\" or \"distinct\" gets a 1px border or a bordered plate treatment, never a box-shadow. Radius stays near-zero throughout.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do read every color from Tier 2 semantic tokens (--surface-*, --text-*, --border-*, --accent-*, --material-*, --signal-*); never reference a Tier 1 ramp step directly from a component.",
+      "Do pair duration and easing tokens together as the paired --transition-* tokens define them — never mix a duration from one pairing with an easing from another; e2e/tokens.spec.ts fails the build if tokens.css and its JS mirror (src/lib/motion-tokens.ts) ever diverge.",
+      "Do use borders and bordered plates for elevation; never introduce box-shadow.",
+      "Do scope --material-reserve to genuine inactive/held/simulated states only (unexpanded groups, passed rail nodes, disclosed-synthetic tags, not-current indices).",
+      "Do choose one of StatBlock's three named variants (ledger/plate/bracket) deliberately per context rather than defaulting to one.",
+      "Do disclose a degraded or synthetic state honestly and visually — the Lab digest's simulatedTag (static brass plate, no pulse, dashed dot) is the confirmed pattern for \"this is not the live thing.\""
+    ],
+    "donts": [
+      "Don't introduce a standalone kicker/eyebrow label (an announcement line above a heading carrying no facts of its own). Metadata lines are legitimate only when they carry real content on their baseline (index + company + dates, byline + source).",
+      "Don't use --material-reserve as a generic secondary accent color; it marks reserve/inactive state only, never decoration.",
+      "Don't add a hard-offset drop shadow anywhere; this world's depth vocabulary is entirely borders, plates, and alpha overlays.",
+      "Don't set Allerta Stencil on body copy, labels, or full words — numerals (and the two-letter Nav brand mark) only.",
+      "Don't author a new hand-timed animation outside the --dur-*/--ease-* pairing system without an explicit exception and its own prefers-reduced-motion guard, matching the one confirmed exception: the digest's dotPulse (2.4s, continuous ambient \"Live\" signal, not a discrete state transition)."
+    ]
+  }
+}

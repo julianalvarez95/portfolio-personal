@@ -17,36 +17,43 @@ export async function Lab() {
         <SectionHeading index="05" title="Lab" />
 
         <div className={styles.header}>
-          <span className={styles.project}>{lab.project}</span>
-          <span className={styles.tagline}>{lab.tagline}</span>
+          <h3 className={styles.project}>{lab.project}</h3>
+          <p className={styles.tagline}>{lab.tagline}</p>
         </div>
 
         <p className={styles.narrative}>{lab.narrative}</p>
 
         <div className={styles.stats}>
           {lab.stats.map((stat) => (
-            <StatBlock key={stat.label} value={stat.value} label={stat.label} />
+            <StatBlock
+              key={stat.label}
+              value={stat.value}
+              label={stat.label}
+              variant="bracket"
+            />
           ))}
         </div>
 
         <LabDiagram />
 
         <div className={styles.digestHeader}>
-          <span className={styles.project}>Morning digest — live feed</span>
-          <span className={styles.tagline}>
+          <h3 className={styles.project}>Morning digest</h3>
+          <p className={styles.tagline}>
             Actual daily output from the morning-digest CronJob above, pulled
             in via a Vercel Eve agent.
-          </span>
-          <span className={live ? styles.liveTag : styles.simulatedTag}>
-            <span
-              className={live ? styles.liveDot : styles.simulatedDot}
-              aria-hidden="true"
-            />
-            {live ? "Live" : "Simulated feed"}
-          </span>
-          <a className={styles.pipelineLink} href="#lab-diagram">
-            ↑ View pipeline
-          </a>
+          </p>
+          <div className={styles.digestMeta}>
+            <span className={live ? styles.liveTag : styles.simulatedTag}>
+              <span
+                className={live ? styles.liveDot : styles.simulatedDot}
+                aria-hidden="true"
+              />
+              {live ? "Live" : "Simulated feed"}
+            </span>
+            <a className={styles.pipelineLink} href="#lab-diagram">
+              ↑ View pipeline
+            </a>
+          </div>
         </div>
         <MorningDigestCarousel slides={digestSlides} />
 

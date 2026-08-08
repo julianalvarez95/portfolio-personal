@@ -1,14 +1,18 @@
 /*
   Hidden by default — needs genuine margin outside the 1200px content
-  column to sit in without overlapping it. 1600px is the "monitor grande
-  en la oficina" half of PRODUCT.md's two named viewing scenes; the
-  "celular de noche" half never sees this at all, by design.
+  column to sit in without overlapping it. 1400px is the lowest width the
+  box math clears without overlap (container's right inner edge sits at
+  W/2+568; the rail needs another 96px past that — the earlier 1600px
+  gate was far more conservative than the geometry required, and hid the
+  signature overdrive motion from most real "monitor grande en la
+  oficina" windows, not just the "celular de noche" half of PRODUCT.md's
+  two viewing scenes, which is the only half meant to miss it).
 */
 .rail {
   display: none;
 }
 
-@media (min-width: 1600px) {
+@media (min-width: 1400px) {
   .rail {
     display: block;
     position: absolute;

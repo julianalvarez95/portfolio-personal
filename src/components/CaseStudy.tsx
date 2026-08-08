@@ -55,7 +55,12 @@ export function CaseStudy({
                 className={styles.statSlot}
                 style={{ "--i": i } as CSSProperties}
               >
-                <StatBlock value={stat.value} label={stat.label} accent={stat.accent} />
+                <StatBlock
+                  value={stat.value}
+                  label={stat.label}
+                  accent={stat.accent}
+                  variant="plate"
+                />
               </div>
             ))}
           </div>
