@@ -7,7 +7,7 @@
   border-bottom: var(--border-hairline);
 }
 
-.row.lit {
+.row[data-near] {
   border-top-color: var(--color-accent);
 }
 

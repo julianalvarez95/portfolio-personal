@@ -1,7 +1,8 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import type { ExperienceEntry } from "@/data/experience";
+import { useProximity } from "@/lib/useProximity";
 import styles from "./ArchiveRow.module.css";
 
 const PROXIMITY_PX = 34;
@@ -14,32 +15,9 @@ export function ArchiveRow({
   index: number;
 }) {
   const [open, setOpen] = useState(false);
-  const rowRef = useRef<HTMLDivElement | null>(null);
+  const rowRef = useProximity<HTMLDivElement>(PROXIMITY_PX);
   const hasDetail = Boolean(entry.detail && entry.detail.length > 0);
   const panelId = `archive-detail-${entry.id}`;
-
-  useEffect(() => {
-    const row = rowRef.current;
-    if (!row) return;
-
-    const canHover =
-      window.matchMedia("(pointer: fine)").matches &&
-      window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    if (!canHover) return;
-
-    function handleMove(e: MouseEvent) {
-      const rect = row!.getBoundingClientRect();
-      const withinX = e.clientX >= rect.left && e.clientX <= rect.right;
-      const near = withinX && Math.abs(e.clientY - rect.top) < PROXIMITY_PX;
-      row!.classList.toggle(styles.lit, near);
-    }
-
-    window.addEventListener("mousemove", handleMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      row.classList.remove(styles.lit);
-    };
-  }, []);
 
   return (
     <div ref={rowRef} className={styles.row}>

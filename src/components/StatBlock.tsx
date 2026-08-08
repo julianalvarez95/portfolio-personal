@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import { useInView } from "@/lib/useInView";
-import { useCountUp } from "@/lib/useCountUp";
+import { useCountUp, renderCountUpInitial } from "@/lib/useCountUp";
+import { useProximity } from "@/lib/useProximity";
 import styles from "./StatBlock.module.css";
 
 const PROXIMITY_PX = 30;
@@ -18,31 +19,15 @@ export function StatBlock({
   accent?: boolean;
   compact?: boolean;
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  const display = useCountUp(value, inView);
+  const { ref: inViewRef, inView } = useInView<HTMLDivElement>();
+  const proximityRef = useProximity<HTMLDivElement>(PROXIMITY_PX);
+  const valueRef = useRef<HTMLSpanElement>(null);
+  useCountUp(valueRef, value, inView);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-
-    const canHover =
-      window.matchMedia("(pointer: fine)").matches &&
-      window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    if (!canHover) return;
-
-    function handleMove(e: MouseEvent) {
-      const rect = el!.getBoundingClientRect();
-      const withinX = e.clientX >= rect.left && e.clientX <= rect.right;
-      const near = withinX && Math.abs(e.clientY - rect.top) < PROXIMITY_PX;
-      el!.classList.toggle(styles.litBorder, near);
-    }
-
-    window.addEventListener("mousemove", handleMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      el.classList.remove(styles.litBorder);
-    };
-  }, [ref]);
+  const setRefs = (el: HTMLDivElement | null) => {
+    inViewRef.current = el;
+    proximityRef.current = el;
+  };
 
   const classes = [styles.block, compact ? styles.compact : ""]
     .filter(Boolean)
@@ -52,8 +37,10 @@ export function StatBlock({
     .join(" ");
 
   return (
-    <div ref={ref} className={classes}>
-      <span className={valueClasses}>{display}</span>
+    <div ref={setRefs} className={classes}>
+      <span ref={valueRef} className={valueClasses}>
+        {renderCountUpInitial(value)}
+      </span>
       <span className={styles.label}>{label}</span>
     </div>
   );

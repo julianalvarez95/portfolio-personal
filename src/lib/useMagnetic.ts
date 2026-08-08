@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { subscribe } from "./pointerField";
 
 const DEFAULT_RADIUS = 70;
 const DEFAULT_STRENGTH = 0.35;
@@ -43,12 +44,12 @@ export function useMagnetic<T extends HTMLElement>(options: MagneticOptions = {}
       window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
     if (!canHover) return;
 
-    function handleMove(e: MouseEvent) {
+    function handleMove({ x, y }: { x: number; y: number }) {
       const rect = el!.getBoundingClientRect();
       const cx = rect.left + rect.width / 2;
       const cy = rect.top + rect.height / 2;
-      const dx = e.clientX - cx;
-      const dy = e.clientY - cy;
+      const dx = x - cx;
+      const dy = y - cy;
       const dist = Math.hypot(dx, dy);
 
       if (dist < radius) {
@@ -63,9 +64,9 @@ export function useMagnetic<T extends HTMLElement>(options: MagneticOptions = {}
       }
     }
 
-    window.addEventListener("mousemove", handleMove);
+    const unsubscribe = subscribe(handleMove);
     return () => {
-      window.removeEventListener("mousemove", handleMove);
+      unsubscribe();
       el.style.transform = "";
       el.style.color = "";
     };

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { fontDisplay, fontMono } from "./fonts";
 import { site } from "@/data/site";
+import { MotionProvider } from "@/components/motion/MotionProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -49,7 +50,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 -->`,
           }}
         />
-        {children}
+        <MotionProvider>{children}</MotionProvider>
         <Analytics />
       </body>
     </html>

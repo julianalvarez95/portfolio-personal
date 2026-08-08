@@ -7,7 +7,7 @@
   transition: border-color 0.15s var(--ease-standard);
 }
 
-.litBorder {
+.block[data-near] {
   border-top-color: var(--color-accent);
 }
 
