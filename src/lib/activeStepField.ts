@@ -85,3 +85,24 @@ export function register(
     }
   };
 }
+
+/**
+ * Mirrors a group's active-id stream without observing an element of its
+ * own — for a decorative echo (e.g. AssemblyRail's dots) that must never
+ * become a competing intersection target: a sticky-pinned element's own
+ * viewport intersection is meaningless once it's stuck, and would corrupt
+ * `recompute`'s result if registered alongside the real observed items.
+ */
+export function subscribe(group: string, listener: Listener): () => void {
+  const g = getGroup(group);
+  g.listeners.add(listener);
+  listener(g.activeId);
+
+  return () => {
+    g.listeners.delete(listener);
+    if (g.elements.size === 0 && g.listeners.size === 0) {
+      g.observer.disconnect();
+      groups.delete(group);
+    }
+  };
+}

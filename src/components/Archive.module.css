@@ -10,6 +10,14 @@
   color: var(--text-muted);
 }
 
+/* Scopes AssemblyRail's named view-timeline to exactly the rows' extent —
+   inert everywhere the rail itself stays display:none (below 1600px). */
+.track {
+  position: relative;
+  view-timeline-name: --archive-progress;
+  view-timeline-axis: block;
+}
+
 @media (max-width: 720px) {
   .labels {
     display: none;
