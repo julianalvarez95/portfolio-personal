@@ -1,17 +1,103 @@
 /*
-  Single source of truth for design tokens.
-  No component may hardcode a color, spacing, radius, or shadow value —
-  everything reads from these custom properties.
+  Single source of truth for design tokens, in two tiers.
+
+  Tier 1 — raw palette below. 12-step ramps (Radix-style semantics: 1 =
+  page background … 6 = subtle border … 9 = solid fill … 11 = muted text
+  … 12 = max-contrast text), plus alpha overlay anchors and single-step
+  signal hues. Right now these values reproduce the site's current
+  editorial-crema look exactly — the chosen direction is what gets to
+  fill them for real (Fase F). No component may reference a Tier 1
+  token directly.
+
+  Tier 2 — semantic roles, below that. `--surface-*`, `--text-*`,
+  `--border-*`, `--fill-*`, `--signal-*`. Every component reads only
+  from here.
 */
 
 :root {
-  /* Color */
-  --color-bg: #f5f4f0;
-  --color-ink: #141414;
-  --color-fg-muted: #6b6b66;
-  --color-border: #dad8d0;
-  --color-surface: #eae8e1;
-  --color-accent: #ff4b1e;
+  /* Tier 1 — neutral ramp */
+  --neutral-1: #f5f4f0;
+  --neutral-2: #f0eee8;
+  --neutral-3: #eae8e1;
+  --neutral-4: #e2ded4;
+  --neutral-5: #dfdcd2;
+  --neutral-6: #dad8d0;
+  --neutral-7: #c9c6ba;
+  --neutral-8: #b6b3a5;
+  --neutral-9: #8f8c80;
+  --neutral-10: #7c7a6e;
+  --neutral-11: #6b6b66;
+  --neutral-12: #141414;
+
+  /* Tier 1 — accent ramp */
+  --accent-1: #fff4f0;
+  --accent-2: #ffe9e0;
+  --accent-3: #ffd6c4;
+  --accent-4: #ffc0a3;
+  --accent-5: #ffaa82;
+  --accent-6: #ff9364;
+  --accent-7: #fd7c48;
+  --accent-8: #ff6530;
+  --accent-9: #ff4b1e;
+  --accent-10: #e2410a;
+  --accent-11: #c93a08;
+  --accent-12: #7a2405;
+
+  /* Tier 1 — alpha overlay anchors (scrims, composited over any surface) */
+  --overlay-black-a1: rgb(0 0 0 / 0.04);
+  --overlay-black-a3: rgb(0 0 0 / 0.12);
+  --overlay-black-a6: rgb(0 0 0 / 0.32);
+  --overlay-black-a9: rgb(0 0 0 / 0.64);
+  --overlay-black-a12: rgb(0 0 0 / 0.92);
+
+  /* Tier 1 — signal hues (single-step solid anchors, not full ramps) */
+  --signal-positive-9: #2f9e44;
+  --signal-caution-9: #e8a712;
+  --signal-critical-9: #d1373f;
+
+  /* Tier 2 — surface roles */
+  --surface-page: var(--neutral-1);
+  --surface-raised: var(--neutral-3);
+  --surface-hover: var(--neutral-4);
+  --surface-active: var(--neutral-5);
+
+  /* Tier 2 — border roles */
+  --border-subtle: var(--neutral-6);
+  --border-default: var(--neutral-7);
+  --border-hover: var(--neutral-8);
+
+  /* Tier 2 — fill roles */
+  --fill-solid: var(--neutral-9);
+  --fill-solid-hover: var(--neutral-10);
+
+  /* Tier 2 — text roles */
+  --text-muted: var(--neutral-11);
+  --text-primary: var(--neutral-12);
+
+  /* Tier 2 — accent roles */
+  --accent-solid: var(--accent-9);
+  --accent-solid-hover: var(--accent-10);
+  --accent-text: var(--accent-9);
+
+  /* Tier 2 — signal roles */
+  --signal-live: var(--accent-9); /* today's "Live" dot piggybacks on accent — see Lab.module.css .liveDot */
+  --signal-positive: var(--signal-positive-9);
+  --signal-caution: var(--signal-caution-9);
+  --signal-critical: var(--signal-critical-9);
+
+  /*
+    Migration aliases — the six color names every existing .module.css
+    still reads. Delete each line only when its last remaining component
+    is rewritten (Fase F); until then this keeps all 18 CSS Modules
+    compiling against Tier 2 without edits, and the page stays pixel
+    for pixel identical.
+  */
+  --color-bg: var(--surface-page);
+  --color-ink: var(--text-primary);
+  --color-fg-muted: var(--text-muted);
+  --color-border: var(--border-subtle);
+  --color-surface: var(--surface-raised);
+  --color-accent: var(--accent-solid);
 
   /* Spacing (8px base unit) */
   --space-1: 4px;
@@ -59,7 +145,43 @@
   --content-max-width: 1200px;
   --content-padding-x: var(--space-6);
 
-  /* Motion */
+  /*
+    Motion vocabulary. Curve and duration are always used paired, never
+    apart — see the --transition-* tokens below — so a curve can't end up
+    racing a duration it was never authored against.
+    src/lib/motion-tokens.ts mirrors this as plain data for motion.dev
+    (Fase E), which can't read CSS custom properties from its config
+    objects; e2e/tokens.spec.ts fails if the two ever diverge.
+  */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1); /* arriving at rest */
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1); /* A→B, both ends are states */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* large surfaces from off-screen */
+  --ease-arrival: cubic-bezier(0.16, 1, 0.3, 1); /* authored focal moments */
+
+  --dur-feedback: 120ms; /* 100–160  hover, press, focus, color */
+  --dur-popover: 160ms; /* 125–200  tooltip, reveal in-place */
+  --dur-dropdown: 200ms; /* 150–250  menu, accordion */
+  --dur-overlay: 320ms; /* 200–500  drawer, full-bleed panel */
+  --dur-focal: 640ms; /* 500–800  focal moment — at most one per screen */
+
+  --transition-feedback: var(--dur-feedback) var(--ease-out-strong);
+  --transition-popover: var(--dur-popover) var(--ease-out-strong);
+  --transition-dropdown: var(--dur-dropdown) var(--ease-out-strong);
+  --transition-overlay: var(--dur-overlay) var(--ease-drawer);
+  --transition-focal: var(--dur-focal) var(--ease-arrival);
+  --transition-swap: var(--dur-dropdown) var(--ease-in-out-strong); /* content A→B, e.g. a carousel slide */
+
+  --stagger-tight: 40ms;
+  --stagger-normal: 70ms;
+  --stagger-loose: 110ms;
+
+  /*
+    Migration aliases for the two motion tokens every existing
+    .module.css still reads — kept at their exact original values (not
+    re-pointed at the new pairs above, which run on a different, faster
+    cadence) so timing stays identical until each module is rewritten
+    to use the new vocabulary directly in Fase F.
+  */
   --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
   --duration-standard: 240ms;
 }
@@ -67,5 +189,28 @@
 @media (max-width: 640px) {
   :root {
     --content-padding-x: var(--space-4);
+  }
+}
+
+/*
+  Collapses every token-driven duration to near-zero. This is why
+  components must always read a --dur-* or --duration-standard token
+  instead of a literal duration: one edit here disarms every token-driven
+  transition at once. Hand-authored animations outside the token system
+  (e.g. Lab.module.css's dotPulse, LabDiagram.module.css's travel) still
+  need their own prefers-reduced-motion guard — see the safety net in
+  globals.css.
+*/
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-feedback: 1ms;
+    --dur-popover: 1ms;
+    --dur-dropdown: 1ms;
+    --dur-overlay: 1ms;
+    --dur-focal: 1ms;
+    --stagger-tight: 0ms;
+    --stagger-normal: 0ms;
+    --stagger-loose: 0ms;
+    --duration-standard: 1ms;
   }
 }

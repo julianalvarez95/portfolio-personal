@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/next";
 import { fontDisplay, fontMono } from "./fonts";
 import { site } from "@/data/site";
@@ -14,6 +14,15 @@ export const metadata: Metadata = {
     description: site.summary,
     type: "profile",
   },
+};
+
+// Next 16: themeColor lives on the `viewport` export, not `metadata`.
+// Hardcoded, not read from tokens.css — this is a static export with no
+// access to CSS custom properties. Mirrors --surface-page (Tier 1
+// --neutral-1); update it here too whenever that value changes.
+export const viewport: Viewport = {
+  colorScheme: "dark",
+  themeColor: "#f5f4f0",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

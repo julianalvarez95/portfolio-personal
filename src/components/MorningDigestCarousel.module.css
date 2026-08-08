@@ -39,6 +39,10 @@
   color: var(--color-fg-muted);
 }
 
+.index {
+  font-variant-numeric: tabular-nums slashed-zero;
+}
+
 .date {
   white-space: nowrap;
 }

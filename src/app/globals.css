@@ -8,6 +8,11 @@
 
 html {
   height: 100%;
+  color-scheme: dark;
+  caret-color: var(--accent-solid);
+  accent-color: var(--accent-solid);
+  scrollbar-color: var(--neutral-8) var(--surface-page);
+  scrollbar-gutter: stable;
 }
 
 html,
@@ -29,6 +34,50 @@ body {
 
 a {
   color: inherit;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+}
+
+::selection {
+  background: var(--accent-solid);
+  color: var(--surface-page);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-8);
+  border-radius: var(--radius-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 2px;
+}
+
+/*
+  Backstop for hand-authored animations that live outside the duration
+  tokens (Lab.module.css's dotPulse, LabDiagram.module.css's travel) — both
+  already carry their own prefers-reduced-motion guard, but this net keeps
+  a future one from shipping without it.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
+  }
 }
 
 /* The crosshair cursor (CursorCrosshair) replaces the native pointer —
