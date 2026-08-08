@@ -40,6 +40,11 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
+# playwright — run artifacts, never source
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
 # impeccable — session state and per-machine consent, not source.
 # .impeccable/mocks/ and .impeccable/sketches/ stay tracked: they carry
 # the approval record for design comps across sessions and machines.

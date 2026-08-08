@@ -12,6 +12,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    // Playwright specs, not React — fixtures.ts's `use` fixture parameter
+    // otherwise trips react-hooks/rules-of-hooks, which pattern-matches on
+    // the name "use" alone.
+    "e2e/**",
+    "playwright.config.ts",
   ]),
 ]);
 
