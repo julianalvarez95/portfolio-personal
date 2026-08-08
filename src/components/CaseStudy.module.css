@@ -52,7 +52,11 @@
 
 .stats {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  /* Single column below 640px: at --text-stat's full clamp size, a two-up
+     stat grid can't fit unbreakable values like "0%→0%+" in the ~174px a
+     2-column track leaves on a narrow phone — grid blowout that
+     overflow-x: hidden used to paper over. */
+  grid-template-columns: 1fr;
   gap: var(--space-6);
 }
 

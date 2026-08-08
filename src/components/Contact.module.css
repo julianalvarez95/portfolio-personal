@@ -20,6 +20,8 @@
   color: var(--color-ink);
   text-decoration: none;
   width: fit-content;
+  max-width: 100%;
+  overflow-wrap: anywhere;
   border-bottom: 1px solid var(--color-border);
   transition: border-color var(--duration-standard) var(--ease-standard),
     color var(--duration-standard) var(--ease-standard);

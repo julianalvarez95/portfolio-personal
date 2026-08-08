@@ -13,12 +13,13 @@ html {
   accent-color: var(--accent-solid);
   scrollbar-color: var(--neutral-8) var(--surface-page);
   scrollbar-gutter: stable;
-}
-
-html,
-body {
-  max-width: 100vw;
-  overflow-x: hidden;
+  /* Single overflow guard, html only — `clip` doesn't establish a scroll
+     container the way `hidden` does, so position: sticky and scroll-linked
+     APIs still resolve against the real document scroller. Never on body:
+     that would make body its own scroller and break the same things. */
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-8); /* clears the fixed Nav (64px) */
 }
 
 body {
@@ -77,15 +78,6 @@ a {
     animation-iteration-count: 1 !important;
     transition-duration: 1ms !important;
     scroll-behavior: auto !important;
-  }
-}
-
-/* The crosshair cursor (CursorCrosshair) replaces the native pointer —
-   !important is required here because it must win over the inline
-   cursor:pointer/default style set on ArchiveRow's trigger button. */
-@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  * {
-    cursor: none !important;
   }
 }
 

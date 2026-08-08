@@ -45,11 +45,10 @@ export function ArchiveRow({
     <div ref={rowRef} className={styles.row}>
       <button
         type="button"
-        className={styles.trigger}
+        className={`${styles.trigger} ${hasDetail ? "" : styles.triggerStatic}`}
         onClick={() => hasDetail && setOpen((v) => !v)}
         aria-expanded={hasDetail ? open : undefined}
         aria-controls={hasDetail ? panelId : undefined}
-        style={{ cursor: hasDetail ? "pointer" : "default" }}
       >
         <span className={styles.index}>{String(index).padStart(2, "0")}</span>
         <span className={styles.company}>{entry.company}</span>

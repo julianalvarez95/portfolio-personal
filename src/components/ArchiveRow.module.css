@@ -31,6 +31,10 @@
   background: var(--color-surface);
 }
 
+.triggerStatic {
+  cursor: default;
+}
+
 .index {
   font-size: var(--text-meta-sm);
   color: var(--color-fg-muted);

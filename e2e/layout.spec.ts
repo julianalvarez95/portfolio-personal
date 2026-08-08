@@ -1,11 +1,12 @@
 import { test, expect } from "./fixtures";
 
-// Runs only on the desktop-webkit project (see playwright.config.ts).
-// `overflow-x: hidden` on html/body is currently masking whatever
-// horizontal overflow exists — scrollWidth still reports the true,
-// un-clipped content size, so this spec is the inventory of what that
-// property is hiding. It is expected to fail on the current site; Fase D
-// removes the clip and this spec is the gate that must go green after.
+// Runs on every project — Fase D removed `overflow-x: hidden` from
+// html/body (it was masking real horizontal overflow: on narrow mobile
+// viewports, an unbreakable stat value ("0%→0%+") and the raw email
+// address forced document width past the device width, which silently
+// widens the whole mobile layout viewport). Both are fixed at the source
+// (CaseStudy.module.css, Contact.module.css) — this spec is the gate
+// that must stay green now that nothing is clipping the symptom.
 
 test.describe("layout — horizontal overflow", () => {
   test("document does not overflow the viewport horizontally", async ({ page }) => {
