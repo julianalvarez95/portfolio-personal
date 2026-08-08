@@ -1,31 +1,31 @@
 .header {
   display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: var(--space-2) var(--space-4);
+  flex-direction: column;
+  gap: var(--space-2);
   margin-bottom: var(--space-5);
 }
 
+/* Real sub-heading, not a kicker above one — the craft floor bans a label
+   sitting above a heading with no exception, so this carries the weight
+   itself instead of announcing content below it. */
 .project {
-  font-family: var(--font-mono);
-  font-size: var(--text-meta);
+  font-family: var(--font-display);
+  font-size: var(--text-case-title);
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: var(--tracking-label);
-  color: var(--color-ink);
+  color: var(--text-primary);
 }
 
 .tagline {
   font-family: var(--font-display);
   font-size: var(--text-body);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
 }
 
 .narrative {
   font-family: var(--font-display);
   font-size: var(--text-body);
   line-height: var(--leading-body);
-  color: var(--color-ink);
+  color: var(--text-primary);
   max-width: 70ch;
   margin-bottom: var(--space-8);
 }
@@ -45,11 +45,18 @@
 
 .digestHeader {
   display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  margin-top: var(--space-8);
+  margin-bottom: var(--space-5);
+}
+
+.digestMeta {
+  display: flex;
   flex-wrap: wrap;
   align-items: baseline;
   gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-8);
-  margin-bottom: var(--space-5);
+  padding-top: var(--space-2);
 }
 
 .footer {
@@ -70,7 +77,7 @@
   gap: var(--space-2) var(--space-5);
   font-family: var(--font-mono);
   font-size: var(--text-meta-sm);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
 }
 
 .stack li {
@@ -81,7 +88,7 @@
 
 .stack li::before {
   content: "·";
-  color: var(--color-border);
+  color: var(--border-subtle);
 }
 
 .stack li:first-child::before {
@@ -99,20 +106,21 @@
   font-size: var(--text-meta);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   white-space: nowrap;
-  transition: color var(--duration-standard) var(--ease-standard),
-    border-color var(--duration-standard) var(--ease-standard);
+  transition: color var(--dur-feedback) var(--ease-out-strong),
+    border-color var(--dur-feedback) var(--ease-out-strong);
 }
 
 .repoLink:hover {
-  color: var(--color-ink);
-  border-color: var(--color-accent);
+  color: var(--text-primary);
+  border-color: var(--accent-solid);
 }
 
-.liveTag {
+.liveTag,
+.simulatedTag {
   display: inline-flex;
   align-items: center;
   gap: var(--space-2);
@@ -121,21 +129,24 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-accent);
   padding-left: var(--space-4);
   border-left: var(--border-hairline);
+}
+
+.liveTag {
+  color: var(--accent-solid);
 }
 
 .liveDot {
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: var(--color-accent);
+  background: var(--accent-solid);
 }
 
 @media (prefers-reduced-motion: no-preference) {
   .liveDot {
-    animation: dotPulse 2.4s var(--ease-standard) infinite;
+    animation: dotPulse 2.4s var(--ease-out-strong) infinite;
   }
 }
 
@@ -149,24 +160,37 @@
   }
 }
 
+/* Honest fallback state — MOCK_DIGESTS is synthetic content shaped to
+   resemble the real feed; a technical hiring manager will check, so this
+   never claims "Live." No pulse: a static plate, not a signal. */
+.simulatedTag {
+  color: var(--material-reserve);
+}
+
+.simulatedDot {
+  width: 6px;
+  height: 6px;
+  border: 1px dashed var(--material-reserve);
+}
+
 .pipelineLink {
   margin-left: auto;
   font-family: var(--font-mono);
   font-size: var(--text-meta);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
   white-space: nowrap;
-  transition: color var(--duration-standard) var(--ease-standard),
-    border-color var(--duration-standard) var(--ease-standard);
+  transition: color var(--dur-feedback) var(--ease-out-strong),
+    border-color var(--dur-feedback) var(--ease-out-strong);
 }
 
 .pipelineLink:hover,
 .pipelineLink:focus-visible {
-  color: var(--color-ink);
-  border-color: var(--color-accent);
+  color: var(--text-primary);
+  border-color: var(--accent-solid);
 }
 
 @media (max-width: 560px) {

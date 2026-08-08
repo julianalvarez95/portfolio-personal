@@ -1,17 +1,110 @@
 /*
-  Single source of truth for design tokens.
-  No component may hardcode a color, spacing, radius, or shadow value —
-  everything reads from these custom properties.
+  Single source of truth for design tokens, in two tiers.
+
+  Tier 1 — raw palette below. 12-step ramps (Radix-style semantics: 1 =
+  page background … 6 = subtle border … 9 = solid fill … 11 = muted text
+  … 12 = max-contrast text), plus alpha overlay anchors and single-step
+  signal hues. Fase F fill: EXPLODED VIEW's cyanotype-blueprint register —
+  a genuinely saturated deep Prussian blue ground (not a desaturated
+  near-black-navy), brick-red/safety-orange accent, muted brass for held
+  inventory. No component may reference a Tier 1 token directly.
+
+  Tier 2 — semantic roles, below that. `--surface-*`, `--text-*`,
+  `--border-*`, `--fill-*`, `--signal-*`, `--material-*`. Every component
+  reads only from here.
 */
 
 :root {
-  /* Color */
-  --color-bg: #f5f4f0;
-  --color-ink: #141414;
-  --color-fg-muted: #6b6b66;
-  --color-border: #dad8d0;
-  --color-surface: #eae8e1;
-  --color-accent: #ff4b1e;
+  /* Tier 1 — neutral ramp (cyanotype blue: deep page ground → white
+     ruled-linework text, never gray — see new-work.md §67) */
+  --neutral-1: #0a2645;
+  --neutral-2: #0e2f52;
+  --neutral-3: #12395f;
+  --neutral-4: #17436d;
+  --neutral-5: #1d4d7a;
+  --neutral-6: #3f6e98;
+  --neutral-7: #6089ac;
+  --neutral-8: #83a8c7;
+  --neutral-9: #aac6dd;
+  --neutral-10: #c7dbec;
+  --neutral-11: #d9e7f2;
+  --neutral-12: #f4f8fc;
+
+  /* Tier 1 — accent ramp (brick-red / safety-orange — "the step being
+     built now") */
+  --accent-1: #2a140a;
+  --accent-2: #3c1c0c;
+  --accent-3: #52240d;
+  --accent-4: #6b2c0c;
+  --accent-5: #87330b;
+  --accent-6: #a53c10;
+  --accent-7: #c04517;
+  --accent-8: #d64f1c;
+  --accent-9: #e35a24;
+  --accent-10: #ef6c34;
+  --accent-11: #f68a52;
+  --accent-12: #ffe3d2;
+
+  /* Tier 1 — alpha overlay anchors (scrims, composited over any surface).
+     Black for depth/shadow; white for hover/press highlights on a dark
+     ground — a blueprint's scrims lighten, they don't darken. */
+  --overlay-black-a1: rgb(0 0 0 / 0.04);
+  --overlay-black-a3: rgb(0 0 0 / 0.12);
+  --overlay-black-a6: rgb(0 0 0 / 0.32);
+  --overlay-black-a9: rgb(0 0 0 / 0.64);
+  --overlay-black-a12: rgb(0 0 0 / 0.92);
+  --overlay-white-a1: rgb(255 255 255 / 0.04);
+  --overlay-white-a3: rgb(255 255 255 / 0.1);
+  --overlay-white-a6: rgb(255 255 255 / 0.22);
+  --overlay-white-a9: rgb(255 255 255 / 0.5);
+  --overlay-white-a12: rgb(255 255 255 / 0.92);
+
+  /* Tier 1 — signal hues (single-step solid anchors, not full ramps) */
+  --signal-positive-9: #4caf6a;
+  --signal-caution-9: #e0a930;
+  --signal-critical-9: #d1373f;
+
+  /* Tier 1 — material anchor: muted brass, "inventory held in reserve".
+     #b28c58, not the initial #a8824f — 4.93:1 on --neutral-1 clears the
+     4.5:1 text floor with margin (the initial value tested at 4.34:1,
+     failed for the small mono labels that read it). */
+  --material-brass-9: #b28c58;
+
+  /* Tier 2 — surface roles */
+  --surface-page: var(--neutral-1);
+  --surface-raised: var(--neutral-3);
+  --surface-hover: var(--neutral-4);
+  --surface-active: var(--neutral-5);
+
+  /* Tier 2 — border roles */
+  --border-subtle: var(--neutral-6);
+  --border-default: var(--neutral-7);
+  --border-hover: var(--neutral-8);
+
+  /* Tier 2 — fill roles */
+  --fill-solid: var(--neutral-9);
+  --fill-solid-hover: var(--neutral-10);
+
+  /* Tier 2 — text roles */
+  --text-muted: var(--neutral-11);
+  --text-primary: var(--neutral-12);
+
+  /* Tier 2 — accent roles. --accent-solid reads step 10, not 9: 9 tested
+     at 4.18:1 on --neutral-1, under the 4.5:1 text floor, and this token
+     is read as text everywhere (kickers, indices, subIndex, stat values).
+     Hover moves to 11 to keep a visible step above the resting solid. */
+  --accent-solid: var(--accent-10);
+  --accent-solid-hover: var(--accent-11);
+  --accent-text: var(--accent-10);
+
+  /* Tier 2 — signal roles */
+  --signal-live: var(--accent-9); /* today's "Live" dot piggybacks on accent — see Lab.module.css .liveDot */
+  --signal-positive: var(--signal-positive-9);
+  --signal-caution: var(--signal-caution-9);
+  --signal-critical: var(--signal-critical-9);
+
+  /* Tier 2 — material role: held inventory (Capabilities, reserve states) */
+  --material-reserve: var(--material-brass-9);
 
   /* Spacing (8px base unit) */
   --space-1: 4px;
@@ -35,13 +128,21 @@
   --radius-none: 0px;
 
   /* Borders */
-  --border-hairline: 1px solid var(--color-border);
+  --border-hairline: 1px solid var(--border-subtle);
 
   /* Typography scale */
   --text-hero: clamp(3rem, 9vw, 8.5rem);
   --text-section-heading: clamp(2rem, 5vw, 3.5rem);
   --text-case-title: clamp(1.5rem, 3vw, 2rem);
   --text-stat: clamp(2.5rem, 6vw, 5.5rem);
+  /* StatBlock's `ledger` variant (Now's inline dimension-line strip) —
+     a real ramp step, not a one-off clamp, since more than one reader
+     needs "a stat number, smaller than --text-stat" going forward. */
+  --text-stat-sm: clamp(1.25rem, 2.4vw, 1.75rem);
+  /* Oversized stencil section-index numerals (SectionHeading's "02",
+     "05"…) — the contract's own "oversized stencil step numerals" line,
+     named as a ramp step since Fase F.2 first wrote it as a bare clamp. */
+  --text-index-stencil: clamp(1.5rem, 4vw, 2.5rem);
   --text-body-lg: 1.125rem;
   --text-body: 1rem;
   --text-meta: 0.875rem;
@@ -59,13 +160,62 @@
   --content-max-width: 1200px;
   --content-padding-x: var(--space-6);
 
-  /* Motion */
-  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
-  --duration-standard: 240ms;
+  /*
+    Motion vocabulary. Curve and duration are always used paired, never
+    apart — see the --transition-* tokens below — so a curve can't end up
+    racing a duration it was never authored against.
+    src/lib/motion-tokens.ts mirrors this as plain data for motion.dev
+    (Fase E), which can't read CSS custom properties from its config
+    objects; e2e/tokens.spec.ts fails if the two ever diverge.
+  */
+  --ease-out-strong: cubic-bezier(0.23, 1, 0.32, 1); /* arriving at rest */
+  --ease-in-out-strong: cubic-bezier(0.77, 0, 0.175, 1); /* A→B, both ends are states */
+  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1); /* large surfaces from off-screen */
+  --ease-arrival: cubic-bezier(0.16, 1, 0.3, 1); /* authored focal moments */
+
+  --dur-feedback: 120ms; /* 100–160  hover, press, focus, color */
+  --dur-popover: 160ms; /* 125–200  tooltip, reveal in-place */
+  --dur-dropdown: 200ms; /* 150–250  menu, accordion */
+  --dur-overlay: 320ms; /* 200–500  drawer, full-bleed panel */
+  --dur-focal: 640ms; /* 500–800  focal moment — at most one per screen */
+
+  --transition-feedback: var(--dur-feedback) var(--ease-out-strong);
+  --transition-popover: var(--dur-popover) var(--ease-out-strong);
+  --transition-dropdown: var(--dur-dropdown) var(--ease-out-strong);
+  --transition-overlay: var(--dur-overlay) var(--ease-drawer);
+  --transition-focal: var(--dur-focal) var(--ease-arrival);
+  --transition-swap: var(--dur-dropdown) var(--ease-in-out-strong); /* content A→B, e.g. a carousel slide */
+
+  --stagger-tight: 40ms;
+  --stagger-normal: 70ms;
+  --stagger-loose: 110ms;
 }
 
 @media (max-width: 640px) {
   :root {
     --content-padding-x: var(--space-4);
+  }
+}
+
+/*
+  Collapses every token-driven duration to near-zero. This is why
+  components must always read a --dur-* or --duration-standard token
+  instead of a literal duration: one edit here disarms every token-driven
+  transition at once. Hand-authored animations outside the token system
+  (e.g. Lab.module.css's dotPulse, LabDiagram.module.css's travel) still
+  need their own prefers-reduced-motion guard — see the safety net in
+  globals.css.
+*/
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-feedback: 1ms;
+    --dur-popover: 1ms;
+    --dur-dropdown: 1ms;
+    --dur-overlay: 1ms;
+    --dur-focal: 1ms;
+    --stagger-tight: 0ms;
+    --stagger-normal: 0ms;
+    --stagger-loose: 0ms;
+    --duration-standard: 1ms;
   }
 }

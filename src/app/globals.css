@@ -8,18 +8,25 @@
 
 html {
   height: 100%;
+  color-scheme: dark;
+  caret-color: var(--accent-solid);
+  accent-color: var(--accent-solid);
+  scrollbar-color: var(--neutral-8) var(--surface-page);
+  scrollbar-gutter: stable;
+  /* Single overflow guard, html only — `clip` doesn't establish a scroll
+     container the way `hidden` does, so position: sticky and scroll-linked
+     APIs still resolve against the real document scroller. Never on body:
+     that would make body its own scroller and break the same things. */
+  overflow-x: clip;
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--space-8); /* clears the fixed Nav (64px) */
 }
 
-html,
 body {
-  max-width: 100vw;
-  overflow-x: hidden;
-}
-
-body {
+  position: relative;
   min-height: 100%;
-  background: var(--color-bg);
-  color: var(--color-ink);
+  background: var(--surface-page);
+  color: var(--text-primary);
   font-family: var(--font-display), system-ui, arial, sans-serif;
   font-size: var(--text-body);
   line-height: var(--leading-body);
@@ -27,16 +34,82 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-a {
-  color: inherit;
+/* The "visible module grid" the direction contract names — one global
+   layer instead of duplicating a grid pattern per section. Faint enough
+   to read as blueprint paper, not a debug overlay. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image:
+    repeating-linear-gradient(
+      to right,
+      var(--overlay-white-a1) 0,
+      var(--overlay-white-a1) 1px,
+      transparent 1px,
+      transparent var(--space-9)
+    ),
+    repeating-linear-gradient(
+      to bottom,
+      var(--overlay-white-a1) 0,
+      var(--overlay-white-a1) 1px,
+      transparent 1px,
+      transparent var(--space-9)
+    );
 }
 
-/* The crosshair cursor (CursorCrosshair) replaces the native pointer —
-   !important is required here because it must win over the inline
-   cursor:pointer/default style set on ArchiveRow's trigger button. */
-@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
-  * {
-    cursor: none !important;
+body > * {
+  position: relative;
+  z-index: 1;
+}
+
+a {
+  color: inherit;
+  text-underline-offset: 0.15em;
+  text-decoration-thickness: 1px;
+  text-decoration-color: currentColor;
+}
+
+::selection {
+  background: var(--accent-solid);
+  color: var(--surface-page);
+}
+
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--surface-page);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neutral-8);
+  border-radius: var(--radius-sm);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent-solid);
+  outline-offset: 2px;
+}
+
+/*
+  Backstop for hand-authored animations that live outside the duration
+  tokens (Lab.module.css's dotPulse, LabDiagram.module.css's travel) — both
+  already carry their own prefers-reduced-motion guard, but this net keeps
+  a future one from shipping without it.
+*/
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+    scroll-behavior: auto !important;
   }
 }
 

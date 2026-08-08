@@ -9,7 +9,9 @@ export function Now() {
       <div className="container">
         <SectionHeading index="01" title="Now" />
         <div className={styles.layout}>
-          <p className={styles.bio}>{site.summary}</p>
+          <div className={styles.statusCol}>
+            <p className={styles.bio}>{site.summary}</p>
+          </div>
           <StatStrip stats={[...site.metaStats]} />
         </div>
       </div>

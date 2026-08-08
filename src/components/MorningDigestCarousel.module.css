@@ -9,7 +9,7 @@
 
 .track {
   display: flex;
-  transition: transform var(--duration-standard) var(--ease-standard);
+  transition: transform var(--dur-dropdown) var(--ease-out-strong);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -36,7 +36,11 @@
   font-size: var(--text-meta-sm);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
+}
+
+.index {
+  font-variant-numeric: tabular-nums slashed-zero;
 }
 
 .date {
@@ -48,7 +52,7 @@
   font-size: var(--text-case-title);
   font-weight: 600;
   line-height: var(--leading-heading);
-  color: var(--color-ink);
+  color: var(--text-primary);
   max-width: 60ch;
 }
 
@@ -56,7 +60,7 @@
   font-family: var(--font-display);
   font-size: var(--text-body);
   line-height: var(--leading-body);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   max-width: 65ch;
 }
 
@@ -66,17 +70,17 @@
   font-size: var(--text-meta);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   text-decoration: none;
   border-bottom: 1px solid transparent;
-  transition: color var(--duration-standard) var(--ease-standard),
-    border-color var(--duration-standard) var(--ease-standard);
+  transition: color var(--dur-feedback) var(--ease-out-strong),
+    border-color var(--dur-feedback) var(--ease-out-strong);
 }
 
 .link:hover,
 .link:focus-visible {
-  color: var(--color-ink);
-  border-color: var(--color-accent);
+  color: var(--text-primary);
+  border-color: var(--accent-solid);
 }
 
 .controls {
@@ -98,27 +102,55 @@
   border-radius: var(--radius-none);
   font-family: var(--font-mono);
   font-size: var(--text-body);
-  color: var(--color-ink);
+  color: var(--text-primary);
   cursor: pointer;
-  transition: border-color var(--duration-standard) var(--ease-standard),
-    color var(--duration-standard) var(--ease-standard);
+  transition: border-color var(--dur-feedback) var(--ease-out-strong),
+    color var(--dur-feedback) var(--ease-out-strong),
+    transform var(--dur-feedback) var(--ease-out-strong);
 }
 
 .navButton:hover,
 .navButton:focus-visible {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
+  border-color: var(--accent-solid);
+  color: var(--accent-solid);
   outline: none;
+}
+
+.navButton:active {
+  transform: scale(0.94);
 }
 
 .progress {
   flex: 1;
   height: 2px;
-  background: var(--color-border);
+  background: var(--border-subtle);
+  overflow: hidden;
 }
 
 .progressFill {
   height: 100%;
-  background: var(--color-accent);
-  transition: width var(--duration-standard) var(--ease-standard);
+  width: 0%;
+  background: var(--accent-solid);
+}
+
+/* Restarted every advance via the component's `key={index}` remount —
+   duration must match AUTO_ADVANCE_MS in MorningDigestCarousel.tsx. */
+.progress[data-draining] .progressFill {
+  animation: drain 7000ms linear;
+}
+
+@keyframes drain {
+  from {
+    width: 0%;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progress[data-draining] .progressFill {
+    animation: none;
+    width: 50%;
+  }
 }

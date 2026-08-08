@@ -1,0 +1,118 @@
+/*
+  Hidden by default — needs genuine margin outside the 1200px content
+  column to sit in without overlapping it. 1400px is the lowest width the
+  box math clears without overlap (container's right inner edge sits at
+  W/2+568; the rail needs another 96px past that — the earlier 1600px
+  gate was far more conservative than the geometry required, and hid the
+  signature overdrive motion from most real "monitor grande en la
+  oficina" windows, not just the "celular de noche" half of PRODUCT.md's
+  two viewing scenes, which is the only half meant to miss it).
+*/
+.rail {
+  display: none;
+}
+
+@media (min-width: 1400px) {
+  .rail {
+    display: block;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 100%;
+    margin-left: var(--space-7);
+    width: 48px;
+    pointer-events: none;
+  }
+}
+
+.pin {
+  position: sticky;
+  top: calc(var(--space-8) + var(--space-6));
+  width: 48px;
+}
+
+.lineBase {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  bottom: 11px;
+  width: 1px;
+  background: var(--border-subtle);
+  transform: translateX(-50%);
+}
+
+/* Base tier: JS sets --progress on .pin as each real row becomes the
+   active step (see AssemblyRail.tsx), eased with the same focal-moment
+   vocabulary as every other authored transition in the build. */
+.lineFill {
+  position: absolute;
+  left: 50%;
+  top: 11px;
+  bottom: 11px;
+  width: 1px;
+  background: var(--accent-solid);
+  transform: translateX(-50%) scaleY(var(--progress, 0));
+  transform-origin: top;
+  transition: transform var(--dur-focal) var(--ease-arrival);
+}
+
+/* Enhancement tier: Chromium's named view-timeline (declared on Archive's
+   .track) replaces the JS-driven step with a continuous scroll-scrubbed
+   draw. Feature-detected — everywhere else keeps the tier above, which is
+   a complete, working motion of its own, not a degraded stand-in. */
+@supports (animation-timeline: view()) {
+  .lineFill {
+    transition: none;
+    animation-name: rail-grow;
+    animation-timeline: --archive-progress;
+    animation-duration: auto;
+    animation-fill-mode: both;
+  }
+}
+
+@keyframes rail-grow {
+  from {
+    transform: translateX(-50%) scaleY(0);
+  }
+  to {
+    transform: translateX(-50%) scaleY(1);
+  }
+}
+
+.nodes {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 320px;
+}
+
+.node {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto;
+  width: 22px;
+  height: 22px;
+  border: 1px solid var(--border-subtle);
+  background: var(--surface-page);
+  font-family: var(--font-stencil);
+  font-size: 9px;
+  color: var(--text-muted);
+  opacity: 0.35;
+  transition: opacity var(--dur-popover) var(--ease-out-strong),
+    color var(--dur-popover) var(--ease-out-strong),
+    border-color var(--dur-popover) var(--ease-out-strong);
+}
+
+.node[data-passed] {
+  opacity: 1;
+  color: var(--material-reserve);
+  border-color: var(--material-reserve);
+}
+
+.node[data-current] {
+  color: var(--accent-solid);
+  border-color: var(--accent-solid);
+}

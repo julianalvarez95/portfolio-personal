@@ -2,13 +2,103 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
-  padding-top: var(--space-4);
-  border-top: var(--border-hairline);
-  transition: border-color 0.15s var(--ease-standard);
+  transition: border-color var(--dur-feedback) var(--ease-out-strong);
 }
 
-.litBorder {
-  border-top-color: var(--color-accent);
+/* Ledger — Now's quick facts as an inline dimension-line strip: one
+   ruled baseline with tick-mark dividers between entries, closer to a
+   blueprint's own measurement device than a stacked hero-metric card. */
+.ledger {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--space-2);
+  padding: 0 0 var(--space-3);
+  border-bottom: var(--border-hairline);
+}
+
+.ledger[data-near] {
+  border-bottom-color: var(--accent-solid);
+}
+
+.ledger .value {
+  font-size: var(--text-stat-sm);
+}
+
+/* Plate — CaseStudy's stats as a stamped spec panel: a bordered cell
+   with corner ticks, not a bare hairline-topped column. Repeats three
+   times (once per case study), so it earns the most distinct framing. */
+.plate {
+  position: relative;
+  padding: var(--space-4);
+  border: 1px solid var(--border-subtle);
+}
+
+.plate::before,
+.plate::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  border-color: var(--accent-solid);
+  border-style: solid;
+  opacity: 0;
+  transition: opacity var(--dur-feedback) var(--ease-out-strong);
+}
+
+.plate::before {
+  top: -1px;
+  left: -1px;
+  border-width: 1px 0 0 1px;
+}
+
+.plate::after {
+  bottom: -1px;
+  right: -1px;
+  border-width: 0 1px 1px 0;
+}
+
+.plate[data-near] {
+  border-color: var(--accent-solid);
+}
+
+.plate[data-near]::before,
+.plate[data-near]::after {
+  opacity: 1;
+}
+
+/* Bracket — Lab's homelab readout as an instrument gauge: flanking
+   brackets left and right, standing apart from the plate's full box and
+   the ledger's single ruled line. */
+.bracket {
+  position: relative;
+  padding: var(--space-2) var(--space-4);
+}
+
+.bracket::before,
+.bracket::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 6px;
+  border-top: 1px solid var(--border-subtle);
+  border-bottom: 1px solid var(--border-subtle);
+  transition: border-color var(--dur-feedback) var(--ease-out-strong);
+}
+
+.bracket::before {
+  left: 0;
+  border-left: 1px solid var(--border-subtle);
+}
+
+.bracket::after {
+  right: 0;
+  border-right: 1px solid var(--border-subtle);
+}
+
+.bracket[data-near]::before,
+.bracket[data-near]::after {
+  border-color: var(--accent-solid);
 }
 
 .value {
@@ -17,16 +107,12 @@
   font-size: var(--text-stat);
   line-height: 1;
   letter-spacing: var(--tracking-tight);
-  color: var(--color-ink);
-  font-variant-numeric: tabular-nums;
-}
-
-.compact .value {
-  font-size: clamp(1.5rem, 3vw, 2.25rem);
+  color: var(--text-primary);
+  font-variant-numeric: tabular-nums slashed-zero;
 }
 
 .accent {
-  color: var(--color-accent);
+  color: var(--accent-solid);
 }
 
 .label {
@@ -34,5 +120,5 @@
   font-size: var(--text-label);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
 }

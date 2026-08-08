@@ -27,8 +27,8 @@
   font-size: var(--text-meta);
   text-transform: uppercase;
   letter-spacing: var(--tracking-label);
-  color: var(--color-accent);
-  border-bottom: var(--border-hairline);
+  color: var(--material-reserve);
+  border-bottom: 1px solid var(--material-reserve);
   padding-bottom: var(--space-2);
 }
 
@@ -45,7 +45,7 @@
   gap: var(--space-2);
   font-family: var(--font-mono);
   font-size: var(--text-meta-sm);
-  color: var(--color-ink);
+  color: var(--text-primary);
 }
 
 .itemIcon {
@@ -64,11 +64,11 @@
 }
 
 .language dt {
-  color: var(--color-ink);
+  color: var(--text-primary);
   font-weight: 600;
 }
 
 .language dd {
-  color: var(--color-fg-muted);
+  color: var(--text-muted);
   margin: 0;
 }

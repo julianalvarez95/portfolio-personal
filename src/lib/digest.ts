@@ -96,7 +96,16 @@ const MOCK_DIGESTS: Digest[] = [
   },
 ];
 
-export async function getDigests(): Promise<Digest[]> {
+export type DigestResult = { digests: Digest[]; live: boolean };
+
+/**
+ * `live: false` means MOCK_DIGESTS shipped — synthetic content written to
+ * closely resemble the real agent's output. The primary visitor is a
+ * technical hiring manager inclined to verify, so the UI must label this
+ * state honestly instead of presenting invented headlines as "Live" (see
+ * PRODUCT.md's Capabilities and Constraints).
+ */
+export async function getDigests(): Promise<DigestResult> {
   const secret = process.env.DIGEST_READ_SECRET;
   if (secret) {
     try {
@@ -107,14 +116,14 @@ export async function getDigests(): Promise<Digest[]> {
       if (res.ok) {
         const data = (await res.json()) as { digests?: Digest[] };
         if (data.digests && data.digests.length > 0) {
-          return data.digests;
+          return { digests: data.digests, live: true };
         }
       }
     } catch {
       // digest-agent unreachable — fall through to the mock below.
     }
   }
-  return MOCK_DIGESTS;
+  return { digests: MOCK_DIGESTS, live: false };
 }
 
 export function flattenDigests(digests: Digest[]): DigestSlide[] {

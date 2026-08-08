@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, type RefObject } from "react";
 
 const NUMBER_PATTERN = /\d[\d,]*\.?\d*/g;
 
@@ -51,25 +51,40 @@ function render(segments: Segment[], progress: number): string {
     .join("");
 }
 
+/** The zero-progress render of a stat string — the SSR/first-paint text. */
+export function renderCountUpInitial(value: string): string {
+  return render(parseSegments(value), 0);
+}
+
 /**
  * Animates the numeric portions of a stat string (e.g. "94%", "566K+",
  * "38%→80%+") from 0 to their target while leaving surrounding text intact.
  * Runs once, when `active` first becomes true.
+ *
+ * Writes straight to `ref.current.textContent` instead of `setState`: the
+ * previous version re-rendered its StatBlock on every animation frame, and
+ * this page mounts 10+ of them simultaneously. Harmless while the page is
+ * static, but a re-render storm competing with motion.dev for the main
+ * thread is how a StatBlock janks and motion gets blamed for it.
  */
-export function useCountUp(value: string, active: boolean, duration = 900): string {
+export function useCountUp<T extends HTMLElement>(
+  ref: RefObject<T | null>,
+  value: string,
+  active: boolean,
+  duration = 900
+): void {
   const segments = useRef(parseSegments(value));
   const startedRef = useRef(false);
-  const [display, setDisplay] = useState(() => render(parseSegments(value), 0));
 
   useEffect(() => {
     segments.current = parseSegments(value);
-    if (!startedRef.current) {
-      setDisplay(render(segments.current, 0));
+    if (!startedRef.current && ref.current) {
+      ref.current.textContent = render(segments.current, 0);
     }
-  }, [value]);
+  }, [value, ref]);
 
   useEffect(() => {
-    if (!active || startedRef.current) return;
+    if (!active || startedRef.current || !ref.current) return;
     startedRef.current = true;
 
     const reduceMotion =
@@ -77,7 +92,7 @@ export function useCountUp(value: string, active: boolean, duration = 900): stri
       window.matchMedia?.("(prefers-reduced-motion: reduce)").matches;
 
     if (reduceMotion || segments.current.every((s) => s.type === "text")) {
-      setDisplay(render(segments.current, 1));
+      ref.current.textContent = render(segments.current, 1);
       return;
     }
 
@@ -87,13 +102,11 @@ export function useCountUp(value: string, active: boolean, duration = 900): stri
     const tick = (now: number) => {
       const progress = Math.min(1, (now - start) / duration);
       const eased = 1 - Math.pow(1 - progress, 3);
-      setDisplay(render(segments.current, eased));
+      if (ref.current) ref.current.textContent = render(segments.current, eased);
       if (progress < 1) frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [active, duration]);
-
-  return display;
+  }, [active, duration, ref]);
 }

@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect } from "react";
+import { useRef } from "react";
 import { useInView } from "@/lib/useInView";
-import { useCountUp } from "@/lib/useCountUp";
+import { useCountUp, renderCountUpInitial } from "@/lib/useCountUp";
+import { useProximity } from "@/lib/useProximity";
 import styles from "./StatBlock.module.css";
 
 const PROXIMITY_PX = 30;
@@ -11,49 +12,42 @@ export function StatBlock({
   value,
   label,
   accent,
-  compact,
+  variant,
 }: {
   value: string;
   label: string;
   accent?: boolean;
-  compact?: boolean;
+  /**
+   * Distinct blueprint-native readouts sharing one animated core
+   * (count-up, proximity-driven accent) instead of one template repeated
+   * verbatim per section: `ledger` (Now's inline dimension-line strip),
+   * `plate` (CaseStudy's stamped spec panel), `bracket` (Lab's
+   * instrument-gauge readout). Required, not defaulted — a call site
+   * that doesn't choose one is exactly how the banned generic template
+   * creeps back in.
+   */
+  variant: "ledger" | "plate" | "bracket";
 }) {
-  const { ref, inView } = useInView<HTMLDivElement>();
-  const display = useCountUp(value, inView);
+  const { ref: inViewRef, inView } = useInView<HTMLDivElement>();
+  const proximityRef = useProximity<HTMLDivElement>(PROXIMITY_PX);
+  const valueRef = useRef<HTMLSpanElement>(null);
+  useCountUp(valueRef, value, inView);
 
-  useEffect(() => {
-    const el = ref.current;
-    if (!el) return;
+  const setRefs = (el: HTMLDivElement | null) => {
+    inViewRef.current = el;
+    proximityRef.current = el;
+  };
 
-    const canHover =
-      window.matchMedia("(pointer: fine)").matches &&
-      window.matchMedia("(prefers-reduced-motion: no-preference)").matches;
-    if (!canHover) return;
-
-    function handleMove(e: MouseEvent) {
-      const rect = el!.getBoundingClientRect();
-      const withinX = e.clientX >= rect.left && e.clientX <= rect.right;
-      const near = withinX && Math.abs(e.clientY - rect.top) < PROXIMITY_PX;
-      el!.classList.toggle(styles.litBorder, near);
-    }
-
-    window.addEventListener("mousemove", handleMove);
-    return () => {
-      window.removeEventListener("mousemove", handleMove);
-      el.classList.remove(styles.litBorder);
-    };
-  }, [ref]);
-
-  const classes = [styles.block, compact ? styles.compact : ""]
-    .filter(Boolean)
-    .join(" ");
+  const classes = [styles.block, styles[variant]].filter(Boolean).join(" ");
   const valueClasses = [styles.value, accent ? styles.accent : ""]
     .filter(Boolean)
     .join(" ");
 
   return (
-    <div ref={ref} className={classes}>
-      <span className={valueClasses}>{display}</span>
+    <div ref={setRefs} className={classes}>
+      <span ref={valueRef} className={valueClasses}>
+        {renderCountUpInitial(value)}
+      </span>
       <span className={styles.label}>{label}</span>
     </div>
   );

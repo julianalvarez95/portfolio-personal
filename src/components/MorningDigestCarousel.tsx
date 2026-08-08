@@ -92,11 +92,17 @@ export function MorningDigestCarousel({ slides }: { slides: DigestSlide[] }) {
         >
           ‹
         </button>
-        <div className={styles.progress}>
-          <div
-            className={styles.progressFill}
-            style={{ width: `${((index + 1) / slides.length) * 100}%` }}
-          />
+        <div
+          className={styles.progress}
+          data-draining={
+            inView && !paused && slides.length > 1 ? "" : undefined
+          }
+        >
+          {/* key={index} remounts the fill on every advance, restarting its
+              CSS animation from empty — a continuous per-cycle drain instead
+              of a per-slide snap, so the bar reads as still running right
+              now instead of a static step function. */}
+          <div key={index} className={styles.progressFill} />
         </div>
         <button
           type="button"

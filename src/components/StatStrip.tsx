@@ -9,7 +9,12 @@ export function StatStrip({
   return (
     <div className={styles.strip}>
       {stats.map((stat) => (
-        <StatBlock key={stat.label} value={stat.value} label={stat.label} compact />
+        <StatBlock
+          key={stat.label}
+          value={stat.value}
+          label={stat.label}
+          variant="ledger"
+        />
       ))}
     </div>
   );
