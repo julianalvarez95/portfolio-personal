@@ -1,3 +1,6 @@
+"use client";
+
+import posthog from "posthog-js";
 import { site } from "@/data/site";
 import { ScrollIndicator } from "./ScrollIndicator";
 import styles from "./Hero.module.css";
@@ -65,7 +68,11 @@ export function Hero() {
         {/* The manual's permanent front-cover legend — contact and CV as
             peers, never buried below the fold as Contact-section-only. */}
         <div className={styles.legend}>
-          <a className={styles.legendLink} href={`mailto:${site.email}`}>
+          <a
+            className={styles.legendLink}
+            href={`mailto:${site.email}`}
+            onClick={() => posthog.capture("hero_email_clicked")}
+          >
             <span className={styles.legendKey}>01</span>
             Contact
           </a>
@@ -74,6 +81,7 @@ export function Hero() {
             href={site.cvFile}
             target="_blank"
             rel="noreferrer"
+            onClick={() => posthog.capture("cv_downloaded", { source: "hero" })}
           >
             <span className={styles.legendKey}>02</span>
             Download CV

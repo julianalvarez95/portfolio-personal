@@ -5,6 +5,7 @@ import { StatBlock } from "./StatBlock";
 import { LabDiagram } from "./LabDiagram";
 import { MorningDigestCarousel } from "./MorningDigestCarousel";
 import { BrandIcon } from "./icons/BrandIcon";
+import { LabRepoLink } from "./LabRepoLink";
 import styles from "./Lab.module.css";
 
 export async function Lab() {
@@ -68,14 +69,7 @@ export async function Lab() {
               </li>
             ))}
           </ul>
-          <a
-            className={styles.repoLink}
-            href={lab.repoUrl}
-            target="_blank"
-            rel="noreferrer"
-          >
-            View repo ↗
-          </a>
+          <LabRepoLink href={lab.repoUrl} />
         </div>
       </div>
     </section>

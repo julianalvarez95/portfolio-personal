@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import posthog from "posthog-js";
 import type { ExperienceEntry } from "@/data/experience";
 import { useProximity } from "@/lib/useProximity";
 import { useActiveStep } from "@/lib/useActiveStep";
@@ -34,7 +35,17 @@ export function ArchiveRow({
         <button
           type="button"
           className={`${styles.trigger} ${hasDetail ? "" : styles.triggerStatic}`}
-          onClick={() => hasDetail && setOpen((v) => !v)}
+          onClick={() => {
+            if (!hasDetail) return;
+            const nextOpen = !open;
+            setOpen(nextOpen);
+            if (nextOpen) {
+              posthog.capture("archive_entry_expanded", {
+                company: entry.company,
+                role: entry.role,
+              });
+            }
+          }}
           aria-expanded={hasDetail ? open : undefined}
           aria-controls={hasDetail ? panelId : undefined}
         >

@@ -1,6 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useRef, useState } from "react";
+import posthog from "posthog-js";
 import { useInView } from "@/lib/useInView";
 import { formatDigestDate } from "@/lib/format";
 import type { DigestSlide } from "@/lib/digest";
@@ -28,8 +29,9 @@ export function MorningDigestCarousel({ slides }: { slides: DigestSlide[] }) {
   }, [inView, paused, slides.length]);
 
   const goTo = useCallback(
-    (next: number) => {
+    (next: number, direction: "prev" | "next") => {
       setIndex(((next % slides.length) + slides.length) % slides.length);
+      posthog.capture("digest_carousel_navigated", { direction });
     },
     [slides.length]
   );
@@ -75,6 +77,12 @@ export function MorningDigestCarousel({ slides }: { slides: DigestSlide[] }) {
                 target="_blank"
                 rel="noreferrer"
                 tabIndex={i === index ? 0 : -1}
+                onClick={() =>
+                  posthog.capture("digest_source_opened", {
+                    source: slide.source,
+                    slide_index: i,
+                  })
+                }
               >
                 Read source ↗
               </a>
@@ -87,7 +95,7 @@ export function MorningDigestCarousel({ slides }: { slides: DigestSlide[] }) {
         <button
           type="button"
           className={styles.navButton}
-          onClick={() => goTo(index - 1)}
+          onClick={() => goTo(index - 1, "prev")}
           aria-label="Previous digest item"
         >
           ‹
@@ -107,7 +115,7 @@ export function MorningDigestCarousel({ slides }: { slides: DigestSlide[] }) {
         <button
           type="button"
           className={styles.navButton}
-          onClick={() => goTo(index + 1)}
+          onClick={() => goTo(index + 1, "next")}
           aria-label="Next digest item"
         >
           ›

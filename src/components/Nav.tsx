@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import posthog from "posthog-js";
 import { MagneticIndex } from "./MagneticIndex";
 import styles from "./Nav.module.css";
 
@@ -50,6 +51,12 @@ export function Nav() {
                 href={`#${item.id}`}
                 className={`${styles.link} ${isActive ? styles.active : ""}`}
                 aria-current={isActive ? "true" : undefined}
+                onClick={() =>
+                  posthog.capture("nav_section_clicked", {
+                    section_id: item.id,
+                    section_label: item.label,
+                  })
+                }
               >
                 <MagneticIndex
                   className={styles.linkIndex}
